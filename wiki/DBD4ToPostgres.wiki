@@ -6,7 +6,8 @@ This project generate SQL scripts from DBDesigner 4 model for Postgres.
 
 = Details =
 
-[http://dbd4topostgres.googlecode.com/files/dbd4topostgres.zip Download]
+
+*[http://dbd4topostgres.googlecode.com/files/dbd4topostgres.zip Download DBD4ToPostgres(2.93MB)]*
 
 http://dbd4topostgres.googlecode.com/files/main_screen.png
 
