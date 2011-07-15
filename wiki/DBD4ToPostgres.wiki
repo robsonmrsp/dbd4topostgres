@@ -5,3 +5,6 @@
 This project generate SQL scripts from DBDesigner 4 model for Postgres.
 
 = Details =
+
+http://dbd4topostgres.googlecode.com/files/tela_programa.png
+*Fig.: Project details screen*
