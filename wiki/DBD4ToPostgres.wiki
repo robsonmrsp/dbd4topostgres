@@ -1,0 +1,7 @@
+#summary General information about DBD4ToPostgres Project.
+
+= Introduction =
+
+This project generate SQL scripts from DBDesigner 4 model for Postgres.
+
+= Details =
