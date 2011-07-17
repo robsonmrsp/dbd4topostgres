@@ -6,7 +6,7 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="buttonGroupObjectIdentification">
     </Component>
-    <Menu class="javax.swing.JMenuBar" name="menuBarPrincipal">
+    <Menu class="javax.swing.JMenuBar" name="menuBarMain">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
@@ -20,24 +20,24 @@
             </CompoundBorder>
           </Border>
         </Property>
-        <Property name="font" type="java.awt.Font" resourceKey="menuBarPrincipal.font"/>
+        <Property name="font" type="java.awt.Font" resourceKey="menuBarMain.font"/>
         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
           <Insets value="[0, 10, 0, 10]"/>
         </Property>
-        <Property name="name" type="java.lang.String" value="menuBarPrincipal" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="menuBarMain" noResource="true"/>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[700, 30]"/>
         </Property>
       </Properties>
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="menuArquivo">
+        <Menu class="javax.swing.JMenu" name="menuFile">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
                 <CompoundBorder>
                   <Border PropertyName="outside" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Property name="color" resourceKey="menuArquivo.border.outsideBorder.lineColor"/>
+                      <Property name="color" resourceKey="menuFile.border.outsideBorder.lineColor"/>
                     </LineBorder>
                   </Border>
                   <Border PropertyName="inside" info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -46,13 +46,13 @@
                 </CompoundBorder>
               </Border>
             </Property>
-            <Property name="foreground" type="java.awt.Color" resourceKey="menuArquivo.foreground"/>
-            <Property name="text" type="java.lang.String" resourceKey="menuArquivo.text"/>
-            <Property name="font" type="java.awt.Font" resourceKey="menuArquivo.font"/>
+            <Property name="foreground" type="java.awt.Color" resourceKey="menuFile.foreground"/>
+            <Property name="text" type="java.lang.String" resourceKey="menuFile.text"/>
+            <Property name="font" type="java.awt.Font" resourceKey="menuFile.font"/>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="iconTextGap" type="int" value="10"/>
-            <Property name="name" type="java.lang.String" value="menuArquivo" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="menuFile" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[80, 30]"/>
             </Property>
@@ -62,40 +62,40 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
           </AuxValues>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="cmdAbrirModelo">
+            <MenuItem class="javax.swing.JMenuItem" name="cmdOpenModel">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="F3"/>
                 </Property>
-                <Property name="text" type="java.lang.String" resourceKey="cmdAbrirModelo.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="cmdAbrirModelo.toolTipText"/>
+                <Property name="text" type="java.lang.String" resourceKey="cmdOpenModel.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="cmdOpenModel.toolTipText"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                     <EmptyBorder bottom="5" left="10" right="10" top="5"/>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="cmdAbrirModelo" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="cmdOpenModel" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdAbrirModeloActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdOpenModelActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="cmdSalvarScript">
+            <MenuItem class="javax.swing.JMenuItem" name="cmdSaveScript">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="F2"/>
                 </Property>
-                <Property name="text" type="java.lang.String" resourceKey="cmdSalvarScript.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="cmdSalvarScript.toolTipText"/>
+                <Property name="text" type="java.lang.String" resourceKey="cmdSaveScript.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="cmdSaveScript.toolTipText"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                     <EmptyBorder bottom="5" left="10" right="10" top="5"/>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="cmdSalvarScript" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="cmdSaveScript" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdSalvarScriptActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdSaveScriptActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="separatorSair">
@@ -104,31 +104,31 @@
                 <Property name="opaque" type="boolean" value="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="cmdSair">
+            <MenuItem class="javax.swing.JMenuItem" name="cmdExit">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="cmdSair.text"/>
-                <Property name="toolTipText" type="java.lang.String" resourceKey="cmdSair.toolTipText"/>
+                <Property name="text" type="java.lang.String" resourceKey="cmdExit.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="cmdExit.toolTipText"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                     <EmptyBorder bottom="5" left="10" right="10" top="5"/>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="cmdSair" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="cmdExit" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdSairActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdExitActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="menuAparencia">
+        <Menu class="javax.swing.JMenu" name="menuLayout">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
                 <CompoundBorder>
                   <Border PropertyName="outside" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Property name="color" resourceKey="menuAparencia.border.outsideBorder.lineColor"/>
+                      <Property name="color" resourceKey="menuLayout.border.outsideBorder.lineColor"/>
                     </LineBorder>
                   </Border>
                   <Border PropertyName="inside" info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -137,11 +137,11 @@
                 </CompoundBorder>
               </Border>
             </Property>
-            <Property name="foreground" type="java.awt.Color" resourceKey="menuAparencia.foreground"/>
-            <Property name="text" type="java.lang.String" resourceKey="menuAparencia.text"/>
-            <Property name="toolTipText" type="java.lang.String" resourceKey="menuAparencia.toolTipText"/>
+            <Property name="foreground" type="java.awt.Color" resourceKey="menuLayout.foreground"/>
+            <Property name="text" type="java.lang.String" resourceKey="menuLayout.text"/>
+            <Property name="toolTipText" type="java.lang.String" resourceKey="menuLayout.toolTipText"/>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="name" type="java.lang.String" value="menuAparencia" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="menuLayout" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[80, 30]"/>
             </Property>
@@ -549,14 +549,14 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="menuAjuda">
+        <Menu class="javax.swing.JMenu" name="menuHelp">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
                 <CompoundBorder>
                   <Border PropertyName="outside" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true">
-                      <Property name="color" resourceKey="menuAjuda.border.outsideBorder.lineColor"/>
+                      <Property name="color" resourceKey="menuHelp.border.outsideBorder.lineColor"/>
                     </LineBorder>
                   </Border>
                   <Border PropertyName="inside" info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -565,13 +565,13 @@
                 </CompoundBorder>
               </Border>
             </Property>
-            <Property name="foreground" type="java.awt.Color" resourceKey="menuAjuda.foreground"/>
-            <Property name="text" type="java.lang.String" resourceKey="menuAjuda.text"/>
-            <Property name="font" type="java.awt.Font" resourceKey="menuAjuda.font"/>
+            <Property name="foreground" type="java.awt.Color" resourceKey="menuHelp.foreground"/>
+            <Property name="text" type="java.lang.String" resourceKey="menuHelp.text"/>
+            <Property name="font" type="java.awt.Font" resourceKey="menuHelp.font"/>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="iconTextGap" type="int" value="10"/>
-            <Property name="name" type="java.lang.String" value="menuAjuda" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="menuHelp" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[80, 30]"/>
             </Property>
@@ -619,7 +619,7 @@
     </Property>
   </Properties>
   <SyntheticProperties>
-    <SyntheticProperty name="menuBar" type="java.lang.String" value="menuBarPrincipal"/>
+    <SyntheticProperty name="menuBar" type="java.lang.String" value="menuBarMain"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
   <AuxValues>
@@ -637,7 +637,7 @@
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="panelPrincipal">
+    <Container class="javax.swing.JPanel" name="panelMain">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -645,9 +645,9 @@
           </Border>
         </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection component="panelPrincipal" name="getPreferredSize" type="method"/>
+          <Connection component="panelMain" name="getPreferredSize" type="method"/>
         </Property>
-        <Property name="name" type="java.lang.String" value="panelPrincipal" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="panelMain" noResource="true"/>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[700, 500]"/>
         </Property>
@@ -664,13 +664,13 @@
         <Property name="verticalGap" type="int" value="5"/>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="panelSelecaoOpcoes">
+        <Container class="javax.swing.JPanel" name="panelSelectOptions">
           <Properties>
-            <Property name="font" type="java.awt.Font" resourceKey="panelSelecaoOpcoes.font"/>
+            <Property name="font" type="java.awt.Font" resourceKey="panelSelectOptions.font"/>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection component="panelSelecaoOpcoes" name="preferredSize" type="property"/>
+              <Connection component="panelSelectOptions" name="preferredSize" type="property"/>
             </Property>
-            <Property name="name" type="java.lang.String" value="panelSelecaoOpcoes" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="panelSelectOptions" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[700, 150]"/>
             </Property>
@@ -683,12 +683,12 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="panelChkOpcoes">
+            <Container class="javax.swing.JPanel" name="panelChkOptions">
               <Properties>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="panelChkOpcoes" name="preferredSize" type="property"/>
+                  <Connection component="panelChkOptions" name="preferredSize" type="property"/>
                 </Property>
-                <Property name="name" type="java.lang.String" value="panelChkOpcoes" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="panelChkOptions" noResource="true"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -799,7 +799,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="panelCmdsOpcoes">
+            <Container class="javax.swing.JPanel" name="panelCmdsOptions">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -807,9 +807,9 @@
                   </Border>
                 </Property>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="panelCmdsOpcoes" name="preferredSize" type="property"/>
+                  <Connection component="panelCmdsOptions" name="preferredSize" type="property"/>
                 </Property>
-                <Property name="name" type="java.lang.String" value="panelCmdsOpcoes" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="panelCmdsOptions" noResource="true"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -823,13 +823,12 @@
                 <Property name="rows" type="int" value="3"/>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="cmdSelecionarTodasOpcoes">
+                <Component class="javax.swing.JButton" name="cmdSelectAllOptions">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" resourceKey="cmdSelecionarTodasOpcoes.background"/>
-                    <Property name="icon" type="javax.swing.Icon" resourceKey="cmdSelecionarTodasOpcoes.icon"/>
-                    <Property name="mnemonic" type="int" value="84"/>
-                    <Property name="text" type="java.lang.String" resourceKey="cmdSelecionarTodasOpcoes.text"/>
-                    <Property name="toolTipText" type="java.lang.String" resourceKey="cmdSelecionarTodasOpcoes.toolTipText"/>
+                    <Property name="background" type="java.awt.Color" resourceKey="cmdSelectAllOptions.background"/>
+                    <Property name="icon" type="javax.swing.Icon" resourceKey="cmdSelectAllOptions.icon"/>
+                    <Property name="text" type="java.lang.String" resourceKey="cmdSelectAllOptions.text"/>
+                    <Property name="toolTipText" type="java.lang.String" resourceKey="cmdSelectAllOptions.toolTipText"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                         <EmptyBorder bottom="12" left="5" right="5" top="12"/>
@@ -847,22 +846,21 @@
                     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[100, 15]"/>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="cmdSelecionarTodasOpcoes" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="cmdSelectAllOptions" noResource="true"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[100, 15]"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdSelecionarTodasOpcoesActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdSelectAllOptionsActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="cmdLimparOpcoes">
+                <Component class="javax.swing.JButton" name="cmdResetAllOptions">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" resourceKey="cmdLimparOpcoes.background"/>
-                    <Property name="icon" type="javax.swing.Icon" resourceKey="cmdLimparOpcoes.icon"/>
-                    <Property name="mnemonic" type="int" value="76"/>
-                    <Property name="text" type="java.lang.String" resourceKey="cmdLimparOpcoes.text"/>
-                    <Property name="toolTipText" type="java.lang.String" resourceKey="cmdLimparOpcoes.toolTipText"/>
+                    <Property name="background" type="java.awt.Color" resourceKey="cmdResetAllOptions.background"/>
+                    <Property name="icon" type="javax.swing.Icon" resourceKey="cmdResetAllOptions.icon"/>
+                    <Property name="text" type="java.lang.String" resourceKey="cmdResetAllOptions.text"/>
+                    <Property name="toolTipText" type="java.lang.String" resourceKey="cmdResetAllOptions.toolTipText"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                         <EmptyBorder bottom="12" left="5" right="5" top="12"/>
@@ -880,22 +878,21 @@
                     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[100, 15]"/>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="cmdLimparOpcoes" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="cmdResetAllOptions" noResource="true"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[100, 15]"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdLimparOpcoesActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdResetAllOptionsActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="cmdGerarScript">
+                <Component class="javax.swing.JButton" name="cmdGenerateScript">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" resourceKey="cmdGerarScript.background"/>
-                    <Property name="icon" type="javax.swing.Icon" resourceKey="cmdGerarScript.icon"/>
-                    <Property name="mnemonic" type="int" value="76"/>
-                    <Property name="text" type="java.lang.String" resourceKey="cmdGerarScript.text"/>
-                    <Property name="toolTipText" type="java.lang.String" resourceKey="cmdGerarScript.toolTipText"/>
+                    <Property name="background" type="java.awt.Color" resourceKey="cmdGenerateScript.background"/>
+                    <Property name="icon" type="javax.swing.Icon" resourceKey="cmdGenerateScript.icon"/>
+                    <Property name="text" type="java.lang.String" resourceKey="cmdGenerateScript.text"/>
+                    <Property name="toolTipText" type="java.lang.String" resourceKey="cmdGenerateScript.toolTipText"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                         <EmptyBorder bottom="12" left="5" right="5" top="12"/>
@@ -913,23 +910,23 @@
                     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[100, 15]"/>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="cmdGerarScript" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="cmdGenerateScript" noResource="true"/>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[100, 15]"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdGerarScriptActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdGenerateScriptActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="panelConfiguracaoExtras">
+            <Container class="javax.swing.JPanel" name="panelExtraConfigurations">
               <Properties>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="panelConfiguracaoExtras" name="preferredSize" type="property"/>
+                  <Connection component="panelExtraConfigurations" name="preferredSize" type="property"/>
                 </Property>
-                <Property name="name" type="java.lang.String" value="panelConfiguracaoExtras" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="panelExtraConfigurations" noResource="true"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[906, 40]"/>
                 </Property>
@@ -1062,12 +1059,12 @@
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="panelSelecaoTabelas">
+        <Container class="javax.swing.JPanel" name="panelTableSelections">
           <Properties>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection component="panelSelecaoTabelas" name="preferredSize" type="property"/>
+              <Connection component="panelTableSelections" name="preferredSize" type="property"/>
             </Property>
-            <Property name="name" type="java.lang.String" value="panelSelecaoTabelas" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="panelTableSelections" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[200, 350]"/>
             </Property>
@@ -1080,47 +1077,11 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="scrollPaneSelecaoTabelas">
+            <Component class="javax.swing.JLabel" name="lblTablesFromModel">
               <Properties>
-                <Property name="background" type="java.awt.Color" resourceKey="scrollPaneSelecaoTabelas.background"/>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[32767, 250]"/>
-                </Property>
-                <Property name="name" type="java.lang.String" value="scrollPaneSelecaoTabelas" noResource="true"/>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-                  <BorderConstraints direction="Center"/>
-                </Constraint>
-              </Constraints>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JList" name="listSelecaoTabelas">
-                  <Properties>
-                    <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                      <StringArray count="0"/>
-                    </Property>
-                    <Property name="alignmentX" type="float" value="1.0"/>
-                    <Property name="alignmentY" type="float" value="2.0"/>
-                    <Property name="dragEnabled" type="boolean" value="true"/>
-                    <Property name="fixedCellWidth" type="int" value="500"/>
-                    <Property name="name" type="java.lang.String" value="listSelecaoTabelas" noResource="true"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="CheckListCellRenderer renderer = new CheckListCellRenderer();&#xa;this.listSelecaoTabelas.setCellRenderer(renderer);&#xa;this.listSelecaoTabelas.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);&#xa;&#xa;CheckListener lst = new CheckListener(this.listSelecaoTabelas);&#xa;this.listSelecaoTabelas.addMouseListener(lst);&#xa;this.listSelecaoTabelas.addKeyListener(lst);"/>
-                  </AuxValues>
-                </Component>
-              </SubComponents>
-            </Container>
-            <Component class="javax.swing.JLabel" name="lblTabelasModelo">
-              <Properties>
-                <Property name="font" type="java.awt.Font" resourceKey="lblTabelasModelo.font"/>
-                <Property name="foreground" type="java.awt.Color" resourceKey="lblTabelasModelo.foreground"/>
-                <Property name="text" type="java.lang.String" resourceKey="lblTabelasModelo.text"/>
+                <Property name="font" type="java.awt.Font" resourceKey="lblTablesFromModel.font"/>
+                <Property name="foreground" type="java.awt.Color" resourceKey="lblTablesFromModel.foreground"/>
+                <Property name="text" type="java.lang.String" resourceKey="lblTablesFromModel.text"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
                     <CompoundBorder>
@@ -1133,7 +1094,7 @@
                     </CompoundBorder>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="lblTabelasModelo" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="lblTablesFromModel" noResource="true"/>
                 <Property name="opaque" type="boolean" value="true"/>
                 <Property name="verticalTextPosition" type="int" value="1"/>
               </Properties>
@@ -1143,14 +1104,50 @@
                 </Constraint>
               </Constraints>
             </Component>
+            <Container class="javax.swing.JScrollPane" name="scrollPaneTableSelections">
+              <Properties>
+                <Property name="background" type="java.awt.Color" resourceKey="scrollPaneTableSelections.background"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[32767, 250]"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="scrollPaneTableSelections" noResource="true"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                  <BorderConstraints direction="Center"/>
+                </Constraint>
+              </Constraints>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JList" name="listTableSelections">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
+                      <StringArray count="0"/>
+                    </Property>
+                    <Property name="alignmentX" type="float" value="1.0"/>
+                    <Property name="alignmentY" type="float" value="2.0"/>
+                    <Property name="dragEnabled" type="boolean" value="true"/>
+                    <Property name="fixedCellWidth" type="int" value="500"/>
+                    <Property name="name" type="java.lang.String" value="listTableSelections" noResource="true"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="CheckListCellRenderer renderer = new CheckListCellRenderer();&#xa;this.listTableSelections.setCellRenderer(renderer);&#xa;this.listTableSelections.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);&#xa;&#xa;CheckListener lst = new CheckListener(this.listTableSelections);&#xa;this.listTableSelections.addMouseListener(lst);&#xa;this.listTableSelections.addKeyListener(lst);"/>
+                  </AuxValues>
+                </Component>
+              </SubComponents>
+            </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="panelResultadoGeracaoScript">
+        <Container class="javax.swing.JPanel" name="panelScriptResult">
           <Properties>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection component="panelResultadoGeracaoScript" name="preferredSize" type="property"/>
+              <Connection component="panelScriptResult" name="preferredSize" type="property"/>
             </Property>
-            <Property name="name" type="java.lang.String" value="panelResultadoGeracaoScript" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="panelScriptResult" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[500, 300]"/>
             </Property>
@@ -1163,12 +1160,12 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="scrollPaneResultadoGeracaoScript">
+            <Container class="javax.swing.JScrollPane" name="scrollPaneScriptResult">
               <Properties>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="scrollPaneResultadoGeracaoScript" name="preferredSize" type="property"/>
+                  <Connection component="scrollPaneScriptResult" name="preferredSize" type="property"/>
                 </Property>
-                <Property name="name" type="java.lang.String" value="scrollPaneResultadoGeracaoScript" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="scrollPaneScriptResult" noResource="true"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[500, 350]"/>
                 </Property>
@@ -1185,28 +1182,28 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="txtAreaResultadoGeracaoScript">
+                <Component class="javax.swing.JTextArea" name="txtAreaScriptResult">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>
-                    <Property name="name" type="java.lang.String" value="txtAreaResultadoGeracaoScript" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="txtAreaScriptResult" noResource="true"/>
                     <Property name="opaque" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new RSyntaxTextArea();"/>
-                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="((RSyntaxTextArea) this.txtAreaResultadoGeracaoScript).setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);&#xa;&#xa;"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="((RSyntaxTextArea) this.txtAreaScriptResult).setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);&#xa;&#xa;"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="panelConverterCampos">
+        <Container class="javax.swing.JPanel" name="panelFieldsTranslate">
           <Properties>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection component="panelConverterCampos" name="preferredSize" type="property"/>
+              <Connection component="panelFieldsTranslate" name="preferredSize" type="property"/>
             </Property>
-            <Property name="name" type="java.lang.String" value="panelConverterCampos" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="panelFieldsTranslate" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[200, 500]"/>
             </Property>
@@ -1219,46 +1216,11 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="scroolPaneConverterCampos">
+            <Component class="javax.swing.JLabel" name="lblTranslateDatatype">
               <Properties>
-                <Property name="background" type="java.awt.Color" resourceKey="scroolPaneConverterCampos.background"/>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="scroolPaneConverterCampos" name="preferredSize" type="property"/>
-                </Property>
-                <Property name="name" type="java.lang.String" value="scroolPaneConverterCampos" noResource="true"/>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-                  <BorderConstraints direction="Center"/>
-                </Constraint>
-              </Constraints>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTable" name="tableConverterCampos">
-                  <Properties>
-                    <Property name="autoCreateRowSorter" type="boolean" value="true"/>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="2" rowCount="1">
-                        <Column editable="false" title=" DBDesigner" type="java.lang.String"/>
-                        <Column editable="true" title="Script" type="java.lang.String"/>
-                      </Table>
-                    </Property>
-                    <Property name="autoResizeMode" type="int" value="4"/>
-                    <Property name="dragEnabled" type="boolean" value="true"/>
-                    <Property name="name" type="java.lang.String" value="tableConverterCampos" noResource="true"/>
-                  </Properties>
-                </Component>
-              </SubComponents>
-            </Container>
-            <Component class="javax.swing.JLabel" name="lblTraduzirTipo">
-              <Properties>
-                <Property name="font" type="java.awt.Font" resourceKey="lblTraduzirTipo.font"/>
-                <Property name="foreground" type="java.awt.Color" resourceKey="lblTraduzirTipo.foreground"/>
-                <Property name="text" type="java.lang.String" resourceKey="lblTraduzirTipo.text"/>
+                <Property name="font" type="java.awt.Font" resourceKey="lblTranslateDatatype.font"/>
+                <Property name="foreground" type="java.awt.Color" resourceKey="lblTranslateDatatype.foreground"/>
+                <Property name="text" type="java.lang.String" resourceKey="lblTranslateDatatype.text"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
                     <CompoundBorder>
@@ -1271,7 +1233,7 @@
                     </CompoundBorder>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="lblTraduzirTipo" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="lblTranslateDatatype" noResource="true"/>
                 <Property name="opaque" type="boolean" value="true"/>
                 <Property name="verticalTextPosition" type="int" value="1"/>
               </Properties>
@@ -1281,6 +1243,41 @@
                 </Constraint>
               </Constraints>
             </Component>
+            <Container class="javax.swing.JScrollPane" name="scroolPaneFieldsTranslate">
+              <Properties>
+                <Property name="background" type="java.awt.Color" resourceKey="scroolPaneFieldsTranslate.background"/>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection component="scroolPaneFieldsTranslate" name="preferredSize" type="property"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value="scroolPaneFieldsTranslate" noResource="true"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                  <BorderConstraints direction="Center"/>
+                </Constraint>
+              </Constraints>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTable" name="tableDatatypes">
+                  <Properties>
+                    <Property name="autoCreateRowSorter" type="boolean" value="true"/>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="2" rowCount="1">
+                        <Column editable="false" title=" DBDesigner" type="java.lang.String"/>
+                        <Column editable="true" title="Script" type="java.lang.String"/>
+                      </Table>
+                    </Property>
+                    <Property name="autoResizeMode" type="int" value="4"/>
+                    <Property name="dragEnabled" type="boolean" value="true"/>
+                    <Property name="name" type="java.lang.String" value="tableDatatypes" noResource="true"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
           </SubComponents>
         </Container>
       </SubComponents>

@@ -4,7 +4,7 @@
  */
 
 /*
- * FrameAjuda.java
+ * FrameHelp.java
  *
  * Created on 10/07/2011, 01:34:31
  */
@@ -18,10 +18,10 @@ import javax.imageio.ImageIO;
  *
  * @author frank
  */
-public class FrameAjuda extends javax.swing.JFrame {
+public class FrameHelp extends javax.swing.JFrame {
     BufferedImage iconeSistema = null;
-    /** Creates new form FrameAjuda */
-    public FrameAjuda() {
+    /** Creates new form FrameHelp */
+    public FrameHelp() {
         initComponents();
         try {            
             this.iconeSistema = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("dbd4topostgres/resources/x_centopeia_icone.png"));
@@ -39,27 +39,27 @@ public class FrameAjuda extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelAjuda = new javax.swing.JPanel();
+        panelHelp = new javax.swing.JPanel();
         panelNorth = new javax.swing.JPanel();
         lblIconeXCentopeia = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        editorPaneTextoAjuda = new javax.swing.JEditorPane();
+        jScrollPaneHelpText = new javax.swing.JScrollPane();
+        editorPaneHelpText = new javax.swing.JEditorPane();
         panelCenter = new javax.swing.JPanel();
-        scrollPaneImagemDataTypes = new javax.swing.JScrollPane();
-        lblImagemDataTypes = new javax.swing.JLabel();
+        scrollPaneDataTypesImage = new javax.swing.JScrollPane();
+        lblDataTypesImage = new javax.swing.JLabel();
         panelSouth = new javax.swing.JPanel();
         closeButton = new javax.swing.JButton();
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dbd4topostgres.Dbd4topostgresApp.class).getContext().getResourceMap(FrameAjuda.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dbd4topostgres.Dbd4topostgresApp.class).getContext().getResourceMap(FrameHelp.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         setName("Form"); // NOI18N
         setUndecorated(true);
 
-        panelAjuda.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panelAjuda.setName("panelAjuda"); // NOI18N
-        panelAjuda.setPreferredSize(new java.awt.Dimension(720, 500));
-        panelAjuda.setLayout(new java.awt.BorderLayout());
+        panelHelp.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panelHelp.setName("panelHelp"); // NOI18N
+        panelHelp.setPreferredSize(new java.awt.Dimension(720, 500));
+        panelHelp.setLayout(new java.awt.BorderLayout());
 
         panelNorth.setName("panelNorth"); // NOI18N
         panelNorth.setLayout(new java.awt.BorderLayout());
@@ -77,51 +77,51 @@ public class FrameAjuda extends javax.swing.JFrame {
         lblIconeXCentopeia.setRequestFocusEnabled(false);
         panelNorth.add(lblIconeXCentopeia, java.awt.BorderLayout.LINE_START);
 
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
+        jScrollPaneHelpText.setName("jScrollPaneHelpText"); // NOI18N
 
-        editorPaneTextoAjuda.setContentType(resourceMap.getString("editorPaneTextoAjuda.contentType")); // NOI18N
-        editorPaneTextoAjuda.setEditable(false);
-        editorPaneTextoAjuda.setText(resourceMap.getString("editorPaneTextoAjuda.text")); // NOI18N
-        editorPaneTextoAjuda.setName("editorPaneTextoAjuda"); // NOI18N
-        jScrollPane1.setViewportView(editorPaneTextoAjuda);
+        editorPaneHelpText.setContentType(resourceMap.getString("editorPaneHelpText.contentType")); // NOI18N
+        editorPaneHelpText.setEditable(false);
+        editorPaneHelpText.setText(resourceMap.getString("editorPaneHelpText.text")); // NOI18N
+        editorPaneHelpText.setName("editorPaneHelpText"); // NOI18N
+        jScrollPaneHelpText.setViewportView(editorPaneHelpText);
 
-        panelNorth.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        panelNorth.add(jScrollPaneHelpText, java.awt.BorderLayout.CENTER);
 
-        panelAjuda.add(panelNorth, java.awt.BorderLayout.NORTH);
+        panelHelp.add(panelNorth, java.awt.BorderLayout.NORTH);
 
         panelCenter.setName("panelCenter"); // NOI18N
         panelCenter.setPreferredSize(new java.awt.Dimension(750, 400));
         panelCenter.setLayout(new java.awt.BorderLayout());
 
-        scrollPaneImagemDataTypes.setBackground(resourceMap.getColor("scrollPaneImagemDataTypes.background")); // NOI18N
-        scrollPaneImagemDataTypes.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPaneImagemDataTypes.setAutoscrolls(true);
-        scrollPaneImagemDataTypes.setName("scrollPaneImagemDataTypes"); // NOI18N
+        scrollPaneDataTypesImage.setBackground(resourceMap.getColor("scrollPaneDataTypesImage.background")); // NOI18N
+        scrollPaneDataTypesImage.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPaneDataTypesImage.setAutoscrolls(true);
+        scrollPaneDataTypesImage.setName("scrollPaneDataTypesImage"); // NOI18N
 
-        lblImagemDataTypes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblImagemDataTypes.setIcon(resourceMap.getIcon("lblImagemDataTypes.icon")); // NOI18N
-        lblImagemDataTypes.setToolTipText(resourceMap.getString("lblImagemDataTypes.toolTipText")); // NOI18N
-        lblImagemDataTypes.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        lblImagemDataTypes.setAlignmentY(0.0F);
-        lblImagemDataTypes.setAutoscrolls(true);
-        lblImagemDataTypes.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 5, 10, 5));
-        lblImagemDataTypes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lblImagemDataTypes.setIconTextGap(0);
-        lblImagemDataTypes.setName("lblImagemDataTypes"); // NOI18N
-        lblImagemDataTypes.setOpaque(true);
-        lblImagemDataTypes.setPreferredSize(new java.awt.Dimension(600, 720));
-        lblImagemDataTypes.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        scrollPaneImagemDataTypes.setViewportView(lblImagemDataTypes);
+        lblDataTypesImage.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblDataTypesImage.setIcon(resourceMap.getIcon("lblDataTypesImage.icon")); // NOI18N
+        lblDataTypesImage.setToolTipText(resourceMap.getString("lblDataTypesImage.toolTipText")); // NOI18N
+        lblDataTypesImage.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblDataTypesImage.setAlignmentY(0.0F);
+        lblDataTypesImage.setAutoscrolls(true);
+        lblDataTypesImage.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 5, 10, 5));
+        lblDataTypesImage.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblDataTypesImage.setIconTextGap(0);
+        lblDataTypesImage.setName("lblDataTypesImage"); // NOI18N
+        lblDataTypesImage.setOpaque(true);
+        lblDataTypesImage.setPreferredSize(new java.awt.Dimension(600, 720));
+        lblDataTypesImage.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        scrollPaneDataTypesImage.setViewportView(lblDataTypesImage);
 
-        panelCenter.add(scrollPaneImagemDataTypes, java.awt.BorderLayout.CENTER);
+        panelCenter.add(scrollPaneDataTypesImage, java.awt.BorderLayout.CENTER);
 
-        panelAjuda.add(panelCenter, java.awt.BorderLayout.CENTER);
+        panelHelp.add(panelCenter, java.awt.BorderLayout.CENTER);
 
         panelSouth.setName("panelSouth"); // NOI18N
         panelSouth.setPreferredSize(new java.awt.Dimension(500, 40));
         panelSouth.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 10));
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(dbd4topostgres.Dbd4topostgresApp.class).getContext().getActionMap(FrameAjuda.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(dbd4topostgres.Dbd4topostgresApp.class).getContext().getActionMap(FrameHelp.class, this);
         closeButton.setAction(actionMap.get("closeAboutBox")); // NOI18N
         closeButton.setBackground(resourceMap.getColor("closeButton.background")); // NOI18N
         closeButton.setFont(resourceMap.getFont("closeButton.font")); // NOI18N
@@ -136,9 +136,9 @@ public class FrameAjuda extends javax.swing.JFrame {
         });
         panelSouth.add(closeButton);
 
-        panelAjuda.add(panelSouth, java.awt.BorderLayout.SOUTH);
+        panelHelp.add(panelSouth, java.awt.BorderLayout.SOUTH);
 
-        getContentPane().add(panelAjuda, java.awt.BorderLayout.CENTER);
+        getContentPane().add(panelHelp, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -154,20 +154,20 @@ public class FrameAjuda extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new FrameAjuda().setVisible(true);
+                new FrameHelp().setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton closeButton;
-    private javax.swing.JEditorPane editorPaneTextoAjuda;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JEditorPane editorPaneHelpText;
+    private javax.swing.JScrollPane jScrollPaneHelpText;
+    private javax.swing.JLabel lblDataTypesImage;
     private javax.swing.JLabel lblIconeXCentopeia;
-    private javax.swing.JLabel lblImagemDataTypes;
-    private javax.swing.JPanel panelAjuda;
     private javax.swing.JPanel panelCenter;
+    private javax.swing.JPanel panelHelp;
     private javax.swing.JPanel panelNorth;
     private javax.swing.JPanel panelSouth;
-    private javax.swing.JScrollPane scrollPaneImagemDataTypes;
+    private javax.swing.JScrollPane scrollPaneDataTypesImage;
     // End of variables declaration//GEN-END:variables
 }

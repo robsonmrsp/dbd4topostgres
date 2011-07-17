@@ -20,7 +20,6 @@ public final class DBDesignerParser {
     private HashMap<String, String> datatypes = null;
     private HashMap<String, String> columns = null;
     private HashMap<String, String> tablesHashMap = null;
-    private Iterator<Element> tableElementsPriorized = null;
     private Element documentRoot;
 
     public DBDesignerParser(String fileName)
@@ -30,7 +29,7 @@ public final class DBDesignerParser {
 
         this.createHashMapDatatypes(this.documentRoot);
 
-        Element metadata = XMLParser.getUniqueChild(this.documentRoot, "METADATA");
+        Element metadata = XMLParser.getUniqueChild(this.documentRoot, "METADATA"); //NOI18N
         Element tables = XMLParser.getUniqueChild(metadata, "TABLES");
         Iterator iteratorTables = XMLParser.getChildrenByTagName(tables, "TABLE");
         this.createHashMapTables(iteratorTables);
@@ -120,7 +119,7 @@ public final class DBDesignerParser {
 
 
 
-    public String sqlCreateTable(Set<String> filterSelectedTables, HashMap<String, String> mapCamposTraducao, String tableOwner, String descricaoOID, boolean isCreateTableSelected, boolean isAddCommentsSelected, boolean isDropTableSelected) {
+    public String sqlCreateTable(Set<String> filterSelectedTables, HashMap<String, String> mapDatatypesTranslation, String tableOwner, String descriptionOID, boolean isCreateTableSelected, boolean isAddCommentsSelected, boolean isDropTableSelected) {
         Element elementMetadata = XMLParser.getUniqueChild(this.documentRoot, "METADATA");
         Element elementTables = XMLParser.getUniqueChild(elementMetadata, "TABLES");
         Iterator iteratorTables = XMLParser.getChildrenByTagName(elementTables, "TABLE");
@@ -143,11 +142,11 @@ public final class DBDesignerParser {
                     if (isCreateTableSelected) {
                         sb.append("CREATE TABLE ").append(tableName).append("(\r\n");
                     }
-                    sb.append(this.sqlColumns(elementTable, mapCamposTraducao, isCreateTableSelected, isAddCommentsSelected, mapColumnsComments));
+                    sb.append(this.sqlColumns(elementTable, mapDatatypesTranslation, isCreateTableSelected, isAddCommentsSelected, mapColumnsComments));
                     if (isCreateTableSelected) {
                         sb.append("\r\n)");
-                        if ((descricaoOID != null) && (!descricaoOID.trim().equals(""))) {
-                            sb.append(descricaoOID);
+                        if ((descriptionOID != null) && (!descriptionOID.trim().equals(""))) {
+                            sb.append(descriptionOID);
                         }
                         sb.append(";\r\n");
                         if ((tableOwner != null) && (!tableOwner.trim().equals(""))) {
@@ -197,7 +196,7 @@ public final class DBDesignerParser {
         return sb.toString();
     }
 
-    private String sqlColumns(Element elementTable, HashMap<String, String> mapCamposTraducao, boolean isCreateTableSelected, boolean isAddCommentsSelected, LinkedHashMap<String, String> mapColumnsComments) {
+    private String sqlColumns(Element elementTable, HashMap<String, String> mapDatatypesTranslation, boolean isCreateTableSelected, boolean isAddCommentsSelected, LinkedHashMap<String, String> mapColumnsComments) {
         StringBuilder sb = new StringBuilder();
         Element elementColumns = XMLParser.getUniqueChild(elementTable, "COLUMNS");
         Iterator iteratorColumns = XMLParser.getChildrenByTagName(elementColumns, "COLUMN");
@@ -212,7 +211,7 @@ public final class DBDesignerParser {
 
         Element elementColumn = null;
         String columnDataType = null;
-        String traducaoColuna = null;
+        String datatypeTranslation = null;
         String defaultValue = null;
         String columnComments = null;
         while (iteratorColumns.hasNext()) {
@@ -237,9 +236,9 @@ public final class DBDesignerParser {
 
 
                 // Verifica se usuário alterou a tradução do tipo de dado
-                traducaoColuna = mapCamposTraducao.get(columnDataType);
-                if ((traducaoColuna != null) && (!traducaoColuna.trim().equals(""))) {
-                    columnDataType = traducaoColuna;
+                datatypeTranslation = mapDatatypesTranslation.get(columnDataType);
+                if ((datatypeTranslation != null) && (!datatypeTranslation.trim().equals(""))) {
+                    columnDataType = datatypeTranslation;
                 }
                 //
                 // Obtem o valor default da coluna
@@ -286,7 +285,7 @@ public final class DBDesignerParser {
         String srcIdTable = null;
         String relationName = null;
         String fKFieldsSrcDest = null;
-        StringTokenizer tokensFieldsOrigenDestino = null;
+        StringTokenizer tokensFieldsSourceTarget = null;
         String fieldName = null;
         String referenceDefinitions = null;
         StringTokenizer tokensReferenceDefinitions = null;
@@ -305,29 +304,29 @@ public final class DBDesignerParser {
 
 
             if ((filterSelectedTables.isEmpty()) || (filterSelectedTables.contains(this.tablesHashMap.get(destIdTable)))) {
-                //
-                // Obtem colunas origens e destinos
-                // formato da colunas : col_src1=col_dest1\ncol_src2=col_dest2\ncol_src3=col_dest3\n
+                // 
+                // Extract source and target columns
+                // Columns format in dbdesigner model: col_src1=col_dest1\ncol_src2=col_dest2\ncol_src3=col_dest3\n
                 //
                 fKFieldsSrcDest = DBDesignerModel4.normalizeAttribute(elementRelation.getAttribute("FKFields"));
-                tokensFieldsOrigenDestino = new StringTokenizer(fKFieldsSrcDest, "\r\n");
+                tokensFieldsSourceTarget = new StringTokenizer(fKFieldsSrcDest, "\r\n");
 
                 sb.append("ALTER TABLE ").append((String) this.tablesHashMap.get(destIdTable));
-                // Se for nomear o relacionamento
+                // Verify if relation is named
                 if (withRelationName) {
                     sb.append("\r\n\tADD CONSTRAINT ").append(relationName.replaceAll(" ", "_")).append(" FOREIGN KEY " + "(");
                 } else {
                     sb.append("\r\n\tADD FOREIGN KEY " + "(");
                 }
 
-                // Adicionar as colunas destinos
+                // Add destination columns
 
-                while (tokensFieldsOrigenDestino.hasMoreTokens()) {
-                    fieldName = tokensFieldsOrigenDestino.nextToken().split("=")[1];
+                while (tokensFieldsSourceTarget.hasMoreTokens()) {
+                    fieldName = tokensFieldsSourceTarget.nextToken().split("=")[1];
                     fieldName = fieldName.replaceAll(" ", "_");
 
                     sb.append(fieldName);
-                    if (tokensFieldsOrigenDestino.hasMoreTokens()) {
+                    if (tokensFieldsSourceTarget.hasMoreTokens()) {
                         sb.append(", ");
                     } else {
                         sb.append(") ");
@@ -335,33 +334,32 @@ public final class DBDesignerParser {
 
                 }
                 sb.append("\r\n\tREFERENCES ").append((String) this.tablesHashMap.get(srcIdTable)).append("(");
-                // Reestarta os tokens para adicionar as colunas origens
-                tokensFieldsOrigenDestino = new StringTokenizer(fKFieldsSrcDest, "\r\n");
+                
+                // Add source columns
+                
+                tokensFieldsSourceTarget = new StringTokenizer(fKFieldsSrcDest, "\r\n");
 
-                while (tokensFieldsOrigenDestino.hasMoreTokens()) {
-                    fieldName = tokensFieldsOrigenDestino.nextToken().split("=")[0];
+                while (tokensFieldsSourceTarget.hasMoreTokens()) {
+                    fieldName = tokensFieldsSourceTarget.nextToken().split("=")[0];
                     fieldName = fieldName.replaceAll(" ", "_");
 
                     sb.append(fieldName);
-                    if (tokensFieldsOrigenDestino.hasMoreTokens()) {
+                    if (tokensFieldsSourceTarget.hasMoreTokens()) {
                         sb.append(", ");
                     } else {
                         sb.append(")");
                     }
 
                 }
-                // Adiciona restrições on delete/update
-                // Verifica se foi criado a definição
+                // Add restriction ON delete/update
+                // Verify definition creation
                 if (elementRelation.getAttribute("CreateRefDef").equals(DBDesignerModel4.TRUE)) {
-                    //Adiciona Referencia On Updade e On Delete
+                    //Add reference On Updade and On Delete
                     referenceDefinitions = DBDesignerModel4.normalizeAttribute(elementRelation.getAttribute("RefDef"));
                     tokensReferenceDefinitions = new StringTokenizer(referenceDefinitions, "\r\n");
-                    // Verifica se o tipo de Matchin da definição é full, partil ou simple
-                    matching = tokensReferenceDefinitions.nextToken();
-                    //String matchingValues[] = matching.split("=");
-                    // Só gera referencia obrigatória
-                    //if ((matchingValues[0].equals("Matching")) && (matchingValues[1].equals(DBDesignerModel4.RELATION_REFERENCE_DEFINITION))) {
-                    // Obtem valores de OnDelete
+                    // 
+                    matching = tokensReferenceDefinitions.nextToken();                   
+                    // OnDelete
                     onDelete = tokensReferenceDefinitions.nextToken();
                     onDeleteValues = onDelete.split("=");
                     if (onDeleteValues[0].equals("OnDelete")) {
@@ -371,7 +369,7 @@ public final class DBDesignerParser {
                     }
 
 
-                    // Obtem valores de OnUpdate
+                    // OnUpdate
                     onUpdate = tokensReferenceDefinitions.nextToken();
                     onUpdateValues = onUpdate.split("=");
                     if (onUpdateValues[0].equals("OnUpdate")) {
@@ -381,7 +379,7 @@ public final class DBDesignerParser {
                     }
 
 
-                    //}
+                   
 
                 }
                 //
@@ -409,7 +407,7 @@ public final class DBDesignerParser {
 
 
                 if (tableName.startsWith("'")) {
-                    // Remove aspas finais                     
+                    // Remove final slash                     
                     viewName = viewName + "'vi_";
                     if (tableName.endsWith("'")) {
                         viewName = viewName + tableName.substring(1, tableName.length() - 1);
@@ -485,7 +483,7 @@ public final class DBDesignerParser {
 
 
                     if (sequenceName.endsWith("'")) {
-                        // Remove aspas finais
+                        // Remove final slash
                         sequenceName = sequenceName.substring(0, sequenceName.length() - 1);
                         sequenceName = sequenceName + "_seq' ";
                     } else {
@@ -529,17 +527,17 @@ public final class DBDesignerParser {
                     sb.append(" ALTER COLUMN ").append(primaryKeyName).append(" SET DEFAULT nextval('");
                     if (tableName.startsWith("'")) {
                         if (tableName.endsWith("'")) {
-                            // Remove aspas inicial e final                            
+                            // Remove initial and final slashs                            
                             sb.append(tableName.substring(1, tableName.length() - 1));
                         } else {
-                            // Remove aspa inicial  
+                            // Remove initial slash  
                             sb.append(tableName.substring(1, tableName.length()));
                         }
                     } else if (tableName.endsWith("'")) {
-                        // Remove aspa final  
+                        // Remove final slash  
                         sb.append(tableName.substring(0, tableName.length() - 1));
                     } else {
-                        // Não tem aspas
+                        // Not have slash
                         sb.append(tableName);
                     }
                     //
@@ -652,7 +650,7 @@ public final class DBDesignerParser {
                 mapTabelasOrdenadas.put(key, null);
             }
         }
-        // Preenche o map com as tabelas
+        // Load the map with tables
         while (iteratorTables.hasNext()) {
             elementTable = (Element) iteratorTables.next();
             tableName = DBDesignerModel4.normalizeAttribute(elementTable.getAttribute("Tablename"));
@@ -716,36 +714,30 @@ class TablesPriority {
     }
 
     public void putTablesReference(String destinationTableReference, String sourceTableReference) {
-        // Verifica se a origem ja esta na lista de prioridades
+        // Verify source in the list of priority
         TableReference newTableReference = new TableReference(sourceTableReference, destinationTableReference);
-
-        // Verifica se nao incluiu a referencia
-
         if (!this.insertedTableReferences.contains(newTableReference)) {
             if ((!this.tables.contains(sourceTableReference))) {
 
-                // Verifica se destino nao existe
+                // Verify target table
                 if (!this.tables.contains(destinationTableReference)) {
                     this.tables.add(sourceTableReference);
                     this.tables.add(destinationTableReference);
                 } else {
-                    // Se a tabela de destino ja existir, insere a origem antes de todas as tabelas
-                    //                     
+                                     
                     this.tables.add(this.tables.indexOf(destinationTableReference), sourceTableReference);
                 }
 
 
             } else {
-                // Trata so a inclusao da tabela de destino
-                // Se ja existir, mover tornar a tabela origem mais prioritaria 
+                // 
                 if ((!sourceTableReference.equals(destinationTableReference)) && this.tables.contains(destinationTableReference)) {
-                    // move source do seu lugar pro lugar da tabela destino, se destino for mais prioritário que origem
+                    // mov source to index of destination table
                     if (this.tables.indexOf(sourceTableReference) > this.tables.indexOf(destinationTableReference)) {
                         this.tables.remove(sourceTableReference);
                         this.tables.add(this.tables.indexOf(destinationTableReference), sourceTableReference);
                     }
-                } else if (!this.tables.contains(destinationTableReference)) {
-                    // adiciona a tabela destino de referencia no final da lista
+                } else if (!this.tables.contains(destinationTableReference)) {                  
                     this.tables.add(destinationTableReference);
                 }
             }
