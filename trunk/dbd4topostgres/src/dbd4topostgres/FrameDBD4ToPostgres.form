@@ -106,6 +106,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="cmdExit">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Alt+X"/>
+                </Property>
                 <Property name="text" type="java.lang.String" resourceKey="cmdExit.text"/>
                 <Property name="toolTipText" type="java.lang.String" resourceKey="cmdExit.toolTipText"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -585,6 +588,9 @@
               <Properties>
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="dbd4topostgres.Db4topostgresView" id="showAboutBox" methodName="showAboutBox"/>
+                </Property>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="F1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" resourceKey="aboutMenuItem.text"/>
                 <Property name="toolTipText" type="java.lang.String" resourceKey="aboutMenuItem.toolTipText"/>

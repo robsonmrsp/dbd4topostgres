@@ -634,6 +634,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         separatorSair.setOpaque(true);
         menuFile.add(separatorSair);
 
+        cmdExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.ALT_MASK));
         cmdExit.setText(resourceMap.getString("cmdExit.text")); // NOI18N
         cmdExit.setToolTipText(resourceMap.getString("cmdExit.toolTipText")); // NOI18N
         cmdExit.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
@@ -909,6 +910,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(dbd4topostgres.Dbd4topostgresApp.class).getContext().getActionMap(FrameDBD4ToPostgres.class, this);
         aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
+        aboutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         aboutMenuItem.setText(resourceMap.getString("aboutMenuItem.text")); // NOI18N
         aboutMenuItem.setToolTipText(resourceMap.getString("aboutMenuItem.toolTipText")); // NOI18N
         aboutMenuItem.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
