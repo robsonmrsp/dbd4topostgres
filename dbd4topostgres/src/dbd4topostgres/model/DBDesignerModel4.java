@@ -44,8 +44,7 @@ public class DBDesignerModel4 {
         }
         return description;
     }
-    
-    
+
     public static String normalizeAttribute(String stringOriginal) {
         String stringConvertida = stringOriginal;
         stringConvertida = stringConvertida.replaceAll("\\\\n", "\r\n");

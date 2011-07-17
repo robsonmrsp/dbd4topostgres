@@ -117,8 +117,6 @@ public final class DBDesignerParser {
         }
     }
 
-
-
     public String sqlCreateTable(Set<String> filterSelectedTables, HashMap<String, String> mapDatatypesTranslation, String tableOwner, String descriptionOID, boolean isCreateTableSelected, boolean isAddCommentsSelected, boolean isDropTableSelected) {
         Element elementMetadata = XMLParser.getUniqueChild(this.documentRoot, "METADATA");
         Element elementTables = XMLParser.getUniqueChild(elementMetadata, "TABLES");
@@ -334,9 +332,9 @@ public final class DBDesignerParser {
 
                 }
                 sb.append("\r\n\tREFERENCES ").append((String) this.tablesHashMap.get(srcIdTable)).append("(");
-                
+
                 // Add source columns
-                
+
                 tokensFieldsSourceTarget = new StringTokenizer(fKFieldsSrcDest, "\r\n");
 
                 while (tokensFieldsSourceTarget.hasMoreTokens()) {
@@ -358,7 +356,7 @@ public final class DBDesignerParser {
                     referenceDefinitions = DBDesignerModel4.normalizeAttribute(elementRelation.getAttribute("RefDef"));
                     tokensReferenceDefinitions = new StringTokenizer(referenceDefinitions, "\r\n");
                     // 
-                    matching = tokensReferenceDefinitions.nextToken();                   
+                    matching = tokensReferenceDefinitions.nextToken();
                     // OnDelete
                     onDelete = tokensReferenceDefinitions.nextToken();
                     onDeleteValues = onDelete.split("=");
@@ -379,7 +377,7 @@ public final class DBDesignerParser {
                     }
 
 
-                   
+
 
                 }
                 //
@@ -724,7 +722,7 @@ class TablesPriority {
                     this.tables.add(sourceTableReference);
                     this.tables.add(destinationTableReference);
                 } else {
-                                     
+
                     this.tables.add(this.tables.indexOf(destinationTableReference), sourceTableReference);
                 }
 
@@ -737,7 +735,7 @@ class TablesPriority {
                         this.tables.remove(sourceTableReference);
                         this.tables.add(this.tables.indexOf(destinationTableReference), sourceTableReference);
                     }
-                } else if (!this.tables.contains(destinationTableReference)) {                  
+                } else if (!this.tables.contains(destinationTableReference)) {
                     this.tables.add(destinationTableReference);
                 }
             }

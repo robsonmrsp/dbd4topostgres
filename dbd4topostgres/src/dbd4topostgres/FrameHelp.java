@@ -19,11 +19,13 @@ import javax.imageio.ImageIO;
  * @author frank
  */
 public class FrameHelp extends javax.swing.JFrame {
+
     BufferedImage iconeSistema = null;
+
     /** Creates new form FrameHelp */
     public FrameHelp() {
         initComponents();
-        try {            
+        try {
             this.iconeSistema = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("dbd4topostgres/resources/x_centopeia_icone.png"));
         } catch (IOException e) {
         }
@@ -144,7 +146,7 @@ public class FrameHelp extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
-       this.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_closeButtonActionPerformed
 
     /**

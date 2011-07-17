@@ -66,7 +66,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
     /** Creates new form FrameDBD4ToPostgres */
     public FrameDBD4ToPostgres() {
         // create a Preferences instance (somewhere later in the code)
-        this.preferences = Preferences.userNodeForPackage(this.getClass());        
+        this.preferences = Preferences.userNodeForPackage(this.getClass());
         //      
         // Set Background Image and Project Icon
         try {
@@ -146,7 +146,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         }
 
         this.listTableSelections.setListData(vectorTables);
-        
+
         // --------------------------------------------------
         // Load data type from model
         HashMap<String, String> mapColumnsTypes = dbDesignerParser.getColumnsDataTypes();
@@ -174,10 +174,10 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
         this.cmdGenerateScript.setEnabled(true);
         //
-      
+
         this.txtFileName = fileName;
         this.setTitle("DBD4ToPostgres - " + fileName); //NOI18N
-        
+
 
     }
 
@@ -923,14 +923,14 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void chkAddForeignKeyStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkAddForeignKeyStateChanged
-        
+
         if (!this.chkAddForeignKey.isSelected()) {
             this.chkAddForeignKeyWithRelationName.setSelected(false);
         }
 }//GEN-LAST:event_chkAddForeignKeyStateChanged
 
     private void chkAddForeignKeyWithRelationNameStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkAddForeignKeyWithRelationNameStateChanged
-        
+
         if (this.chkAddForeignKeyWithRelationName.isSelected()) {
             this.chkAddForeignKey.setSelected(true);
         }
@@ -962,7 +962,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 }//GEN-LAST:event_cmdResetAllOptionsActionPerformed
 
     private void cmdGenerateScriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdGenerateScriptActionPerformed
-        
+
         if (this.txtFileName.length() > 0) {
             try {
                 DBDesignerParser dbdesignerParser = new DBDesignerParser(this.txtFileName);
@@ -974,7 +974,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                         setTabelasSelecionadas.add(idTable.getName());
                     }
                 }
-               
+
                 // OID
                 String descriptionOID = null;
                 if (this.chkObjectIdentification.isSelected()) {
@@ -1009,7 +1009,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                     scriptSql.append(dbdesignerParser.sqlCreateTable(setTabelasSelecionadas, mapDatatypesTranslation, this.txtOwner.getText(), descriptionOID, this.chkCreateTable.isSelected(), this.chkAddComments.isSelected(), this.chkDropTable.isSelected()));
                     scriptSql.append("\r\n"); //NOI18N
                 }
-                if (this.chkCreateView.isSelected() || (this.chkCreateView.isSelected() &&this.chkDropTable.isSelected())) {
+                if (this.chkCreateView.isSelected() || (this.chkCreateView.isSelected() && this.chkDropTable.isSelected())) {
                     scriptSql.append(dbdesignerParser.sqlCreateView(setTabelasSelecionadas, this.txtOwner.getText(), this.chkCreateView.isSelected(), this.chkDropTable.isSelected()));
                     scriptSql.append("\r\n"); //NOI18N
                 }
@@ -1021,7 +1021,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                     scriptSql.append(dbdesignerParser.sqlCreateAlternatingKey(setTabelasSelecionadas, this.chkAddAlternateKey.isSelected(), this.chkDropTable.isSelected()));
                     scriptSql.append("\r\n"); //NOI18N
                 }
-                if (this.chkCreateSequence.isSelected() || (this.chkCreateSequence.isSelected() && this.chkDropTable.isSelected())) {                    
+                if (this.chkCreateSequence.isSelected() || (this.chkCreateSequence.isSelected() && this.chkDropTable.isSelected())) {
                     scriptSql.append(dbdesignerParser.sqlCreateSequence(setTabelasSelecionadas, this.txtOwner.getText(), this.chkCreateSequence.isSelected(), this.chkDropTable.isSelected()));
                     scriptSql.append("\r\n"); //NOI18N
                     if (this.chkCreateSequence.isSelected()) {
@@ -1030,7 +1030,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                         scriptSql.append("\r\n"); //NOI18N
                     }
                 }
-               
+
 
                 if (this.chkStandardInserts.isSelected()) {
                     scriptSql.append(dbdesignerParser.sqlCreateTableStandardInserts(setTabelasSelecionadas));
@@ -1108,8 +1108,8 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
     }//GEN-LAST:event_cmdOpenModelActionPerformed
 
     private void cmdSaveScriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSaveScriptActionPerformed
-        
-        try {           
+
+        try {
             JFileChooser fc = null;
             //           
             if (this.currentOutputDirectory != null) {
@@ -1138,7 +1138,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
 
             fc.setFileFilter(fileFilter);
-            int res = fc.showDialog(this,java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("SAVE TO..."));
+            int res = fc.showDialog(this, java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("SAVE TO..."));
 
             this.currentOutputDirectory = fc.getCurrentDirectory();
 
@@ -1176,7 +1176,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
     }//GEN-LAST:event_cmdSaveScriptActionPerformed
 
     private void cmdExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdExitActionPerformed
-      
+
         this.dispose();
     }//GEN-LAST:event_cmdExitActionPerformed
 
@@ -1310,7 +1310,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
             }
             SwingUtilities.updateComponentTreeUI(this);
-           
+
 
 
             this.preferences.put("LAST_LOOKANDFELL", look); //NOI18N
@@ -1414,7 +1414,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
     public static void main(String args[]) {
         try {
             JFrame.setDefaultLookAndFeelDecorated(true);
-           
+
             java.awt.EventQueue.invokeLater(new Runnable() {
 
                 public void run() {
