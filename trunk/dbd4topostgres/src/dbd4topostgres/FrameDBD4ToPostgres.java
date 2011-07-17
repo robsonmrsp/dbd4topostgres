@@ -57,43 +57,43 @@ import dbd4topostgres.model.DBDesignerParser;
 public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
     private Preferences preferences;
-    private File diretorioCorrenteSaida = null;
-    private File diretorioCorrenteEntrada = null;
+    private File currentOutputDirectory = null;
+    private File currentInputDirectory = null;
     private String txtFileName = null;
-    BufferedImage imagemBackground = null;
-    BufferedImage iconeSistema = null;
+    BufferedImage backgroundImage = null;
+    BufferedImage projectIcon = null;
 
     /** Creates new form FrameDBD4ToPostgres */
     public FrameDBD4ToPostgres() {
         // create a Preferences instance (somewhere later in the code)
         this.preferences = Preferences.userNodeForPackage(this.getClass());        
         //      
-        // Setar Background e Icone do sistema
+        // Set Background Image and Project Icon
         try {
-            this.imagemBackground = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("dbd4topostgres/resources/x_centopeia.png"));
-            this.iconeSistema = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("dbd4topostgres/resources/x_centopeia_icone.png"));
+            this.backgroundImage = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("dbd4topostgres/resources/x_centopeia.png")); //NOI18N
+            this.projectIcon = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("dbd4topostgres/resources/x_centopeia_icone.png")); //NOI18N
         } catch (IOException e) {
         }
 
 
         this.initComponents();
-        this.setIconImage(this.iconeSistema);
-        this.setTitle("DBD4ToPostgres");
-        this.cmdGerarScript.setEnabled(false);
+        this.setIconImage(this.projectIcon);
+        this.setTitle("DBD4ToPostgres"); //NOI18N
+        this.cmdGenerateScript.setEnabled(false);
         //
         //
 
 
-        // Ultimo look and feel
+        // Last look and feel
 
-        String lastLookAndFell = this.preferences.get("LAST_LOOKANDFELL", "");
-        if (lastLookAndFell == null || lastLookAndFell.trim().equals("")) {
-            lastLookAndFell = "Moderate";
+        String lastLookAndFell = this.preferences.get("LAST_LOOKANDFELL", ""); //NOI18N
+        if (lastLookAndFell == null || lastLookAndFell.trim().equals("")) { //NOI18N
+            lastLookAndFell = "Moderate"; //NOI18N
         }
-        ActionEvent acao = new ActionEvent(new JRadioButton("LookAndFellAbstrato"), ActionEvent.ACTION_PERFORMED, lastLookAndFell);
-        this.lookAndFellActionPerfomed(acao);
+        ActionEvent action = new ActionEvent(new JRadioButton("LookAndFellAbstrato"), ActionEvent.ACTION_PERFORMED, lastLookAndFell); //NOI18N
+        this.lookAndFellActionPerfomed(action);
 
-        // Abri ultimo arquivo
+        // Open last file
         this.openLastModel();
 
 
@@ -102,15 +102,15 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
     }
 
     private void openLastModel() {
-        // Seleciona o ultimo arquivo aberto
+        // Select the last open file
         try {
 
 
-            String lastInputDir = this.preferences.get("LAST_INPUT_DIR", "");
-            if (lastInputDir != null && (!lastInputDir.trim().equals(""))) {
+            String lastInputDir = this.preferences.get("LAST_INPUT_DIR", ""); //NOI18N
+            if (lastInputDir != null && (!lastInputDir.trim().equals(""))) { //NOI18N
 
                 File file = new File(lastInputDir);
-                this.diretorioCorrenteEntrada = file.getParentFile();
+                this.currentInputDirectory = file.getParentFile();
 
 
                 //
@@ -125,19 +125,19 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
     }
 
     private void openModel(File file) throws Exception {
-        String nomeArquivo = null;
+        String fileName = null;
 
 
-        nomeArquivo = file.getPath();
+        fileName = file.getPath();
         DBDesignerParser dbDesignerParser = new DBDesignerParser(file.getPath());
 
-        // Carregas a lista de tabelas do modelo
+        // Load tables list from model
         Collection<String> tables = dbDesignerParser.getTables();
-        // Ordena em ordem alfabética
+        // Sort table by names
         ArrayList arrayListTable = new ArrayList(tables);
         Collections.sort(arrayListTable);
         tables = arrayListTable;
-        // Monta lista de tabelas
+        // Build vector from tables list
         Vector vectorTables = new Vector();
 
         for (String table : tables) {
@@ -145,20 +145,18 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
             vectorTables.add(id);
         }
 
-        this.listSelecaoTabelas.setListData(vectorTables);
-        // Atualiza a dimensão da lista de tabelas
-
-
+        this.listTableSelections.setListData(vectorTables);
+        
         // --------------------------------------------------
-        // Carrega a tabela de Tipos de Colunas
+        // Load data type from model
         HashMap<String, String> mapColumnsTypes = dbDesignerParser.getColumnsDataTypes();
-        // Ordena lista
+        // Sort data type list by name
         ArrayList arrayListColumnsTypes = new ArrayList(mapColumnsTypes.values());
         Collections.sort(arrayListColumnsTypes);
         //
 
-        // Mapeia os dados para Object[][]
-        // inicialmente o valores das 2 colunas serão iguais.
+        // Map data types to Object[][]
+        // Initially, the value is equals to source and target translation
 
         Object[][] arrayTipoColunas = new Object[arrayListColumnsTypes.size()][2];
 
@@ -168,23 +166,18 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
             arrayTipoColunas[i][1] = arrayListColumnsTypes.get(i);
 
         }
-        // Move valores para a lista na tela
-        DefaultTableModel modelTiposCampos = (DefaultTableModel) this.tableConverterCampos.getModel();
-        String[] jTableColumnNames = {" DBDesigner", "Script"};
+        // Mov data type values to screen list
+        DefaultTableModel modelTiposCampos = (DefaultTableModel) this.tableDatatypes.getModel();
+        String[] jTableColumnNames = {" DBDesigner", "Script"}; //NOI18N
         modelTiposCampos.setDataVector(arrayTipoColunas, jTableColumnNames);
 
 
-        //arrayTipoColunas.
-        //------------------------------------
-
-        this.cmdGerarScript.setEnabled(true);
+        this.cmdGenerateScript.setEnabled(true);
         //
-        this.txtFileName = nomeArquivo;
-        this.setTitle("DBD4ToPostgres - " + nomeArquivo);
-        //
-        //org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dbd4topostgres.Dbd4topostgresApp.class).getContext().getResourceMap(FrameDBD4ToPostgres.class);
-        //Image image = (Image) resourceMap.getIcon("teste");
-        //image.setAccelerationPriority(TOP_ALIGNMENT);
+      
+        this.txtFileName = fileName;
+        this.setTitle("DBD4ToPostgres - " + fileName); //NOI18N
+        
 
     }
 
@@ -199,9 +192,9 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
         buttonGroupLookAndFeel = new javax.swing.ButtonGroup();
         buttonGroupObjectIdentification = new javax.swing.ButtonGroup();
-        panelPrincipal = new javax.swing.JPanel();
-        panelSelecaoOpcoes = new javax.swing.JPanel();
-        panelChkOpcoes = new javax.swing.JPanel();
+        panelMain = new javax.swing.JPanel();
+        panelSelectOptions = new javax.swing.JPanel();
+        panelChkOptions = new javax.swing.JPanel();
         chkDropTable = new javax.swing.JCheckBox();
         chkCreateTable = new javax.swing.JCheckBox();
         chkCreateView = new javax.swing.JCheckBox();
@@ -211,11 +204,11 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         chkCreateSequence = new javax.swing.JCheckBox();
         chkAddComments = new javax.swing.JCheckBox();
         chkStandardInserts = new javax.swing.JCheckBox();
-        panelCmdsOpcoes = new javax.swing.JPanel();
-        cmdSelecionarTodasOpcoes = new javax.swing.JButton();
-        cmdLimparOpcoes = new javax.swing.JButton();
-        cmdGerarScript = new javax.swing.JButton();
-        panelConfiguracaoExtras = new javax.swing.JPanel();
+        panelCmdsOptions = new javax.swing.JPanel();
+        cmdSelectAllOptions = new javax.swing.JButton();
+        cmdResetAllOptions = new javax.swing.JButton();
+        cmdGenerateScript = new javax.swing.JButton();
+        panelExtraConfigurations = new javax.swing.JPanel();
         panelOwner = new javax.swing.JPanel();
         lblOwner = new javax.swing.JLabel();
         txtOwner = new javax.swing.JTextField();
@@ -223,33 +216,33 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         chkObjectIdentification = new javax.swing.JCheckBox();
         radioWithOID = new javax.swing.JRadioButton();
         radioWithoutOID = new javax.swing.JRadioButton();
-        panelSelecaoTabelas = new javax.swing.JPanel();
-        scrollPaneSelecaoTabelas = new javax.swing.JScrollPane();
-        listSelecaoTabelas = new javax.swing.JList();
+        panelTableSelections = new javax.swing.JPanel();
+        lblTablesFromModel = new javax.swing.JLabel();
+        scrollPaneTableSelections = new javax.swing.JScrollPane();
+        listTableSelections = new javax.swing.JList();
         CheckListCellRenderer renderer = new CheckListCellRenderer();
-        this.listSelecaoTabelas.setCellRenderer(renderer);
-        this.listSelecaoTabelas.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        this.listTableSelections.setCellRenderer(renderer);
+        this.listTableSelections.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        CheckListener lst = new CheckListener(this.listSelecaoTabelas);
-        this.listSelecaoTabelas.addMouseListener(lst);
-        this.listSelecaoTabelas.addKeyListener(lst);
-        lblTabelasModelo = new javax.swing.JLabel();
-        panelResultadoGeracaoScript = new javax.swing.JPanel();
-        scrollPaneResultadoGeracaoScript = new RTextScrollPane();
-        txtAreaResultadoGeracaoScript = new RSyntaxTextArea();
-        ((RSyntaxTextArea) this.txtAreaResultadoGeracaoScript).setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
+        CheckListener lst = new CheckListener(this.listTableSelections);
+        this.listTableSelections.addMouseListener(lst);
+        this.listTableSelections.addKeyListener(lst);
+        panelScriptResult = new javax.swing.JPanel();
+        scrollPaneScriptResult = new RTextScrollPane();
+        txtAreaScriptResult = new RSyntaxTextArea();
+        ((RSyntaxTextArea) this.txtAreaScriptResult).setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
 
-        panelConverterCampos = new javax.swing.JPanel();
-        scroolPaneConverterCampos = new javax.swing.JScrollPane();
-        tableConverterCampos = new javax.swing.JTable();
-        lblTraduzirTipo = new javax.swing.JLabel();
-        menuBarPrincipal = new javax.swing.JMenuBar();
-        javax.swing.JMenu menuArquivo = new javax.swing.JMenu();
-        cmdAbrirModelo = new javax.swing.JMenuItem();
-        cmdSalvarScript = new javax.swing.JMenuItem();
+        panelFieldsTranslate = new javax.swing.JPanel();
+        lblTranslateDatatype = new javax.swing.JLabel();
+        scroolPaneFieldsTranslate = new javax.swing.JScrollPane();
+        tableDatatypes = new javax.swing.JTable();
+        menuBarMain = new javax.swing.JMenuBar();
+        javax.swing.JMenu menuFile = new javax.swing.JMenu();
+        cmdOpenModel = new javax.swing.JMenuItem();
+        cmdSaveScript = new javax.swing.JMenuItem();
         separatorSair = new javax.swing.JPopupMenu.Separator();
-        cmdSair = new javax.swing.JMenuItem();
-        menuAparencia = new javax.swing.JMenu();
+        cmdExit = new javax.swing.JMenuItem();
+        menuLayout = new javax.swing.JMenu();
         rdLFAutumn = new javax.swing.JRadioButtonMenuItem();
         rdLFBusiness = new javax.swing.JRadioButtonMenuItem();
         rdLFBusinessBlackSteel = new javax.swing.JRadioButtonMenuItem();
@@ -270,7 +263,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         rdLFRavenGraphite = new javax.swing.JRadioButtonMenuItem();
         rdLFRavenGraphiteGlass = new javax.swing.JRadioButtonMenuItem();
         rdLFSahara = new javax.swing.JRadioButtonMenuItem();
-        javax.swing.JMenu menuAjuda = new javax.swing.JMenu();
+        javax.swing.JMenu menuHelp = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -278,41 +271,41 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         setName("Form"); // NOI18N
         setState(JFrame.NORMAL);
 
-        panelPrincipal.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 20, 10));
-        panelPrincipal.setMinimumSize(panelPrincipal.getPreferredSize());
-        panelPrincipal.setName("panelPrincipal"); // NOI18N
-        panelPrincipal.setPreferredSize(new java.awt.Dimension(700, 500));
-        panelPrincipal.setRequestFocusEnabled(false);
-        panelPrincipal.setLayout(new java.awt.BorderLayout(5, 5));
+        panelMain.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 20, 10));
+        panelMain.setMinimumSize(panelMain.getPreferredSize());
+        panelMain.setName("panelMain"); // NOI18N
+        panelMain.setPreferredSize(new java.awt.Dimension(700, 500));
+        panelMain.setRequestFocusEnabled(false);
+        panelMain.setLayout(new java.awt.BorderLayout(5, 5));
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dbd4topostgres.Dbd4topostgresApp.class).getContext().getResourceMap(FrameDBD4ToPostgres.class);
-        panelSelecaoOpcoes.setFont(resourceMap.getFont("panelSelecaoOpcoes.font")); // NOI18N
-        panelSelecaoOpcoes.setMinimumSize(panelSelecaoOpcoes.getPreferredSize());
-        panelSelecaoOpcoes.setName("panelSelecaoOpcoes"); // NOI18N
-        panelSelecaoOpcoes.setPreferredSize(new java.awt.Dimension(700, 150));
-        panelSelecaoOpcoes.setLayout(new java.awt.BorderLayout());
+        panelSelectOptions.setFont(resourceMap.getFont("panelSelectOptions.font")); // NOI18N
+        panelSelectOptions.setMinimumSize(panelSelectOptions.getPreferredSize());
+        panelSelectOptions.setName("panelSelectOptions"); // NOI18N
+        panelSelectOptions.setPreferredSize(new java.awt.Dimension(700, 150));
+        panelSelectOptions.setLayout(new java.awt.BorderLayout());
 
-        panelChkOpcoes.setMinimumSize(panelChkOpcoes.getPreferredSize());
-        panelChkOpcoes.setName("panelChkOpcoes"); // NOI18N
-        panelChkOpcoes.setLayout(new java.awt.GridLayout(3, 3));
+        panelChkOptions.setMinimumSize(panelChkOptions.getPreferredSize());
+        panelChkOptions.setName("panelChkOptions"); // NOI18N
+        panelChkOptions.setLayout(new java.awt.GridLayout(3, 3));
 
         chkDropTable.setText(resourceMap.getString("chkDropTable.text")); // NOI18N
         chkDropTable.setToolTipText(resourceMap.getString("chkDropTable.toolTipText")); // NOI18N
         chkDropTable.setName("chkDropTable"); // NOI18N
         chkDropTable.setPreferredSize(new java.awt.Dimension(80, 20));
-        panelChkOpcoes.add(chkDropTable);
+        panelChkOptions.add(chkDropTable);
 
         chkCreateTable.setText(resourceMap.getString("chkCreateTable.text")); // NOI18N
         chkCreateTable.setToolTipText(resourceMap.getString("chkCreateTable.toolTipText")); // NOI18N
         chkCreateTable.setName("chkCreateTable"); // NOI18N
         chkCreateTable.setPreferredSize(new java.awt.Dimension(80, 20));
-        panelChkOpcoes.add(chkCreateTable);
+        panelChkOptions.add(chkCreateTable);
 
         chkCreateView.setText(resourceMap.getString("chkCreateView.text")); // NOI18N
         chkCreateView.setToolTipText(resourceMap.getString("chkCreateView.toolTipText")); // NOI18N
         chkCreateView.setName("chkCreateView"); // NOI18N
         chkCreateView.setPreferredSize(new java.awt.Dimension(80, 20));
-        panelChkOpcoes.add(chkCreateView);
+        panelChkOptions.add(chkCreateView);
 
         chkAddForeignKey.setText(resourceMap.getString("chkAddForeignKey.text")); // NOI18N
         chkAddForeignKey.setToolTipText(resourceMap.getString("chkAddForeignKey.toolTipText")); // NOI18N
@@ -323,7 +316,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 chkAddForeignKeyStateChanged(evt);
             }
         });
-        panelChkOpcoes.add(chkAddForeignKey);
+        panelChkOptions.add(chkAddForeignKey);
 
         chkAddForeignKeyWithRelationName.setText(resourceMap.getString("chkAddForeignKeyWithRelationName.text")); // NOI18N
         chkAddForeignKeyWithRelationName.setToolTipText(resourceMap.getString("chkAddForeignKeyWithRelationName.toolTipText")); // NOI18N
@@ -334,108 +327,105 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 chkAddForeignKeyWithRelationNameStateChanged(evt);
             }
         });
-        panelChkOpcoes.add(chkAddForeignKeyWithRelationName);
+        panelChkOptions.add(chkAddForeignKeyWithRelationName);
 
         chkAddAlternateKey.setText(resourceMap.getString("chkAddAlternateKey.text")); // NOI18N
         chkAddAlternateKey.setToolTipText(resourceMap.getString("chkAddAlternateKey.toolTipText")); // NOI18N
         chkAddAlternateKey.setName("chkAddAlternateKey"); // NOI18N
         chkAddAlternateKey.setPreferredSize(new java.awt.Dimension(80, 20));
-        panelChkOpcoes.add(chkAddAlternateKey);
+        panelChkOptions.add(chkAddAlternateKey);
 
         chkCreateSequence.setText(resourceMap.getString("chkCreateSequence.text")); // NOI18N
         chkCreateSequence.setToolTipText(resourceMap.getString("chkCreateSequence.toolTipText")); // NOI18N
         chkCreateSequence.setName("chkCreateSequence"); // NOI18N
         chkCreateSequence.setPreferredSize(new java.awt.Dimension(80, 20));
-        panelChkOpcoes.add(chkCreateSequence);
+        panelChkOptions.add(chkCreateSequence);
 
         chkAddComments.setText(resourceMap.getString("chkAddComments.text")); // NOI18N
         chkAddComments.setToolTipText(resourceMap.getString("chkAddComments.toolTipText")); // NOI18N
         chkAddComments.setName("chkAddComments"); // NOI18N
         chkAddComments.setPreferredSize(new java.awt.Dimension(80, 20));
-        panelChkOpcoes.add(chkAddComments);
+        panelChkOptions.add(chkAddComments);
 
         chkStandardInserts.setText(resourceMap.getString("chkStandardInserts.text")); // NOI18N
         chkStandardInserts.setToolTipText(resourceMap.getString("chkStandardInserts.toolTipText")); // NOI18N
         chkStandardInserts.setName("chkStandardInserts"); // NOI18N
         chkStandardInserts.setPreferredSize(new java.awt.Dimension(80, 20));
-        panelChkOpcoes.add(chkStandardInserts);
+        panelChkOptions.add(chkStandardInserts);
 
-        panelSelecaoOpcoes.add(panelChkOpcoes, java.awt.BorderLayout.CENTER);
+        panelSelectOptions.add(panelChkOptions, java.awt.BorderLayout.CENTER);
 
-        panelCmdsOpcoes.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 100));
-        panelCmdsOpcoes.setMinimumSize(panelCmdsOpcoes.getPreferredSize());
-        panelCmdsOpcoes.setName("panelCmdsOpcoes"); // NOI18N
-        panelCmdsOpcoes.setLayout(new java.awt.GridLayout(3, 1, 0, 5));
+        panelCmdsOptions.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 100));
+        panelCmdsOptions.setMinimumSize(panelCmdsOptions.getPreferredSize());
+        panelCmdsOptions.setName("panelCmdsOptions"); // NOI18N
+        panelCmdsOptions.setLayout(new java.awt.GridLayout(3, 1, 0, 5));
 
-        cmdSelecionarTodasOpcoes.setBackground(resourceMap.getColor("cmdSelecionarTodasOpcoes.background")); // NOI18N
-        cmdSelecionarTodasOpcoes.setIcon(resourceMap.getIcon("cmdSelecionarTodasOpcoes.icon")); // NOI18N
-        cmdSelecionarTodasOpcoes.setMnemonic('T');
-        cmdSelecionarTodasOpcoes.setText(resourceMap.getString("cmdSelecionarTodasOpcoes.text")); // NOI18N
-        cmdSelecionarTodasOpcoes.setToolTipText(resourceMap.getString("cmdSelecionarTodasOpcoes.toolTipText")); // NOI18N
-        cmdSelecionarTodasOpcoes.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 5, 12, 5));
-        cmdSelecionarTodasOpcoes.setContentAreaFilled(false);
-        cmdSelecionarTodasOpcoes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        cmdSelecionarTodasOpcoes.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        cmdSelecionarTodasOpcoes.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        cmdSelecionarTodasOpcoes.setMaximumSize(new java.awt.Dimension(100, 15));
-        cmdSelecionarTodasOpcoes.setMinimumSize(new java.awt.Dimension(100, 15));
-        cmdSelecionarTodasOpcoes.setName("cmdSelecionarTodasOpcoes"); // NOI18N
-        cmdSelecionarTodasOpcoes.setPreferredSize(new java.awt.Dimension(100, 15));
-        cmdSelecionarTodasOpcoes.addActionListener(new java.awt.event.ActionListener() {
+        cmdSelectAllOptions.setBackground(resourceMap.getColor("cmdSelectAllOptions.background")); // NOI18N
+        cmdSelectAllOptions.setIcon(resourceMap.getIcon("cmdSelectAllOptions.icon")); // NOI18N
+        cmdSelectAllOptions.setText(resourceMap.getString("cmdSelectAllOptions.text")); // NOI18N
+        cmdSelectAllOptions.setToolTipText(resourceMap.getString("cmdSelectAllOptions.toolTipText")); // NOI18N
+        cmdSelectAllOptions.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 5, 12, 5));
+        cmdSelectAllOptions.setContentAreaFilled(false);
+        cmdSelectAllOptions.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        cmdSelectAllOptions.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        cmdSelectAllOptions.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        cmdSelectAllOptions.setMaximumSize(new java.awt.Dimension(100, 15));
+        cmdSelectAllOptions.setMinimumSize(new java.awt.Dimension(100, 15));
+        cmdSelectAllOptions.setName("cmdSelectAllOptions"); // NOI18N
+        cmdSelectAllOptions.setPreferredSize(new java.awt.Dimension(100, 15));
+        cmdSelectAllOptions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdSelecionarTodasOpcoesActionPerformed(evt);
+                cmdSelectAllOptionsActionPerformed(evt);
             }
         });
-        panelCmdsOpcoes.add(cmdSelecionarTodasOpcoes);
+        panelCmdsOptions.add(cmdSelectAllOptions);
 
-        cmdLimparOpcoes.setBackground(resourceMap.getColor("cmdLimparOpcoes.background")); // NOI18N
-        cmdLimparOpcoes.setIcon(resourceMap.getIcon("cmdLimparOpcoes.icon")); // NOI18N
-        cmdLimparOpcoes.setMnemonic('L');
-        cmdLimparOpcoes.setText(resourceMap.getString("cmdLimparOpcoes.text")); // NOI18N
-        cmdLimparOpcoes.setToolTipText(resourceMap.getString("cmdLimparOpcoes.toolTipText")); // NOI18N
-        cmdLimparOpcoes.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 5, 12, 5));
-        cmdLimparOpcoes.setContentAreaFilled(false);
-        cmdLimparOpcoes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        cmdLimparOpcoes.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        cmdLimparOpcoes.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        cmdLimparOpcoes.setMaximumSize(new java.awt.Dimension(100, 15));
-        cmdLimparOpcoes.setMinimumSize(new java.awt.Dimension(100, 15));
-        cmdLimparOpcoes.setName("cmdLimparOpcoes"); // NOI18N
-        cmdLimparOpcoes.setPreferredSize(new java.awt.Dimension(100, 15));
-        cmdLimparOpcoes.addActionListener(new java.awt.event.ActionListener() {
+        cmdResetAllOptions.setBackground(resourceMap.getColor("cmdResetAllOptions.background")); // NOI18N
+        cmdResetAllOptions.setIcon(resourceMap.getIcon("cmdResetAllOptions.icon")); // NOI18N
+        cmdResetAllOptions.setText(resourceMap.getString("cmdResetAllOptions.text")); // NOI18N
+        cmdResetAllOptions.setToolTipText(resourceMap.getString("cmdResetAllOptions.toolTipText")); // NOI18N
+        cmdResetAllOptions.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 5, 12, 5));
+        cmdResetAllOptions.setContentAreaFilled(false);
+        cmdResetAllOptions.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        cmdResetAllOptions.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        cmdResetAllOptions.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        cmdResetAllOptions.setMaximumSize(new java.awt.Dimension(100, 15));
+        cmdResetAllOptions.setMinimumSize(new java.awt.Dimension(100, 15));
+        cmdResetAllOptions.setName("cmdResetAllOptions"); // NOI18N
+        cmdResetAllOptions.setPreferredSize(new java.awt.Dimension(100, 15));
+        cmdResetAllOptions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdLimparOpcoesActionPerformed(evt);
+                cmdResetAllOptionsActionPerformed(evt);
             }
         });
-        panelCmdsOpcoes.add(cmdLimparOpcoes);
+        panelCmdsOptions.add(cmdResetAllOptions);
 
-        cmdGerarScript.setBackground(resourceMap.getColor("cmdGerarScript.background")); // NOI18N
-        cmdGerarScript.setIcon(resourceMap.getIcon("cmdGerarScript.icon")); // NOI18N
-        cmdGerarScript.setMnemonic('L');
-        cmdGerarScript.setText(resourceMap.getString("cmdGerarScript.text")); // NOI18N
-        cmdGerarScript.setToolTipText(resourceMap.getString("cmdGerarScript.toolTipText")); // NOI18N
-        cmdGerarScript.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 5, 12, 5));
-        cmdGerarScript.setContentAreaFilled(false);
-        cmdGerarScript.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        cmdGerarScript.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        cmdGerarScript.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        cmdGerarScript.setMaximumSize(new java.awt.Dimension(100, 15));
-        cmdGerarScript.setMinimumSize(new java.awt.Dimension(100, 15));
-        cmdGerarScript.setName("cmdGerarScript"); // NOI18N
-        cmdGerarScript.setPreferredSize(new java.awt.Dimension(100, 15));
-        cmdGerarScript.addActionListener(new java.awt.event.ActionListener() {
+        cmdGenerateScript.setBackground(resourceMap.getColor("cmdGenerateScript.background")); // NOI18N
+        cmdGenerateScript.setIcon(resourceMap.getIcon("cmdGenerateScript.icon")); // NOI18N
+        cmdGenerateScript.setText(resourceMap.getString("cmdGenerateScript.text")); // NOI18N
+        cmdGenerateScript.setToolTipText(resourceMap.getString("cmdGenerateScript.toolTipText")); // NOI18N
+        cmdGenerateScript.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 5, 12, 5));
+        cmdGenerateScript.setContentAreaFilled(false);
+        cmdGenerateScript.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        cmdGenerateScript.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        cmdGenerateScript.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        cmdGenerateScript.setMaximumSize(new java.awt.Dimension(100, 15));
+        cmdGenerateScript.setMinimumSize(new java.awt.Dimension(100, 15));
+        cmdGenerateScript.setName("cmdGenerateScript"); // NOI18N
+        cmdGenerateScript.setPreferredSize(new java.awt.Dimension(100, 15));
+        cmdGenerateScript.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdGerarScriptActionPerformed(evt);
+                cmdGenerateScriptActionPerformed(evt);
             }
         });
-        panelCmdsOpcoes.add(cmdGerarScript);
+        panelCmdsOptions.add(cmdGenerateScript);
 
-        panelSelecaoOpcoes.add(panelCmdsOpcoes, java.awt.BorderLayout.EAST);
+        panelSelectOptions.add(panelCmdsOptions, java.awt.BorderLayout.EAST);
 
-        panelConfiguracaoExtras.setMinimumSize(panelConfiguracaoExtras.getPreferredSize());
-        panelConfiguracaoExtras.setName("panelConfiguracaoExtras"); // NOI18N
-        panelConfiguracaoExtras.setPreferredSize(new java.awt.Dimension(906, 40));
-        panelConfiguracaoExtras.setLayout(new java.awt.GridLayout(1, 0));
+        panelExtraConfigurations.setMinimumSize(panelExtraConfigurations.getPreferredSize());
+        panelExtraConfigurations.setName("panelExtraConfigurations"); // NOI18N
+        panelExtraConfigurations.setPreferredSize(new java.awt.Dimension(906, 40));
+        panelExtraConfigurations.setLayout(new java.awt.GridLayout(1, 0));
 
         panelOwner.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         panelOwner.setMinimumSize(panelOwner.getPreferredSize());
@@ -453,7 +443,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         panelOwner.add(txtOwner);
         txtOwner.setBounds(80, 10, 150, 20);
 
-        panelConfiguracaoExtras.add(panelOwner);
+        panelExtraConfigurations.add(panelOwner);
 
         panelObjectIdentification.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         panelObjectIdentification.setMinimumSize(panelObjectIdentification.getPreferredSize());
@@ -488,71 +478,80 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         panelObjectIdentification.add(radioWithoutOID);
         radioWithoutOID.setBounds(90, 10, 100, 23);
 
-        panelConfiguracaoExtras.add(panelObjectIdentification);
+        panelExtraConfigurations.add(panelObjectIdentification);
 
-        panelSelecaoOpcoes.add(panelConfiguracaoExtras, java.awt.BorderLayout.SOUTH);
+        panelSelectOptions.add(panelExtraConfigurations, java.awt.BorderLayout.SOUTH);
 
-        panelPrincipal.add(panelSelecaoOpcoes, java.awt.BorderLayout.NORTH);
+        panelMain.add(panelSelectOptions, java.awt.BorderLayout.NORTH);
 
-        panelSelecaoTabelas.setMinimumSize(panelSelecaoTabelas.getPreferredSize());
-        panelSelecaoTabelas.setName("panelSelecaoTabelas"); // NOI18N
-        panelSelecaoTabelas.setPreferredSize(new java.awt.Dimension(200, 350));
-        panelSelecaoTabelas.setLayout(new java.awt.BorderLayout());
+        panelTableSelections.setMinimumSize(panelTableSelections.getPreferredSize());
+        panelTableSelections.setName("panelTableSelections"); // NOI18N
+        panelTableSelections.setPreferredSize(new java.awt.Dimension(200, 350));
+        panelTableSelections.setLayout(new java.awt.BorderLayout());
 
-        scrollPaneSelecaoTabelas.setBackground(resourceMap.getColor("scrollPaneSelecaoTabelas.background")); // NOI18N
-        scrollPaneSelecaoTabelas.setMaximumSize(new java.awt.Dimension(32767, 250));
-        scrollPaneSelecaoTabelas.setName("scrollPaneSelecaoTabelas"); // NOI18N
+        lblTablesFromModel.setFont(resourceMap.getFont("lblTablesFromModel.font")); // NOI18N
+        lblTablesFromModel.setForeground(resourceMap.getColor("lblTablesFromModel.foreground")); // NOI18N
+        lblTablesFromModel.setText(resourceMap.getString("lblTablesFromModel.text")); // NOI18N
+        lblTablesFromModel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        lblTablesFromModel.setName("lblTablesFromModel"); // NOI18N
+        lblTablesFromModel.setOpaque(true);
+        lblTablesFromModel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        panelTableSelections.add(lblTablesFromModel, java.awt.BorderLayout.NORTH);
 
-        listSelecaoTabelas.setAlignmentX(1.0F);
-        listSelecaoTabelas.setAlignmentY(2.0F);
-        listSelecaoTabelas.setDragEnabled(true);
-        listSelecaoTabelas.setFixedCellWidth(500);
-        listSelecaoTabelas.setName("listSelecaoTabelas"); // NOI18N
-        scrollPaneSelecaoTabelas.setViewportView(listSelecaoTabelas);
+        scrollPaneTableSelections.setBackground(resourceMap.getColor("scrollPaneTableSelections.background")); // NOI18N
+        scrollPaneTableSelections.setMaximumSize(new java.awt.Dimension(32767, 250));
+        scrollPaneTableSelections.setName("scrollPaneTableSelections"); // NOI18N
 
-        panelSelecaoTabelas.add(scrollPaneSelecaoTabelas, java.awt.BorderLayout.CENTER);
+        listTableSelections.setAlignmentX(1.0F);
+        listTableSelections.setAlignmentY(2.0F);
+        listTableSelections.setDragEnabled(true);
+        listTableSelections.setFixedCellWidth(500);
+        listTableSelections.setName("listTableSelections"); // NOI18N
+        scrollPaneTableSelections.setViewportView(listTableSelections);
 
-        lblTabelasModelo.setFont(resourceMap.getFont("lblTabelasModelo.font")); // NOI18N
-        lblTabelasModelo.setForeground(resourceMap.getColor("lblTabelasModelo.foreground")); // NOI18N
-        lblTabelasModelo.setText(resourceMap.getString("lblTabelasModelo.text")); // NOI18N
-        lblTabelasModelo.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        lblTabelasModelo.setName("lblTabelasModelo"); // NOI18N
-        lblTabelasModelo.setOpaque(true);
-        lblTabelasModelo.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        panelSelecaoTabelas.add(lblTabelasModelo, java.awt.BorderLayout.NORTH);
+        panelTableSelections.add(scrollPaneTableSelections, java.awt.BorderLayout.CENTER);
 
-        panelPrincipal.add(panelSelecaoTabelas, java.awt.BorderLayout.WEST);
+        panelMain.add(panelTableSelections, java.awt.BorderLayout.WEST);
 
-        panelResultadoGeracaoScript.setMinimumSize(panelResultadoGeracaoScript.getPreferredSize());
-        panelResultadoGeracaoScript.setName("panelResultadoGeracaoScript"); // NOI18N
-        panelResultadoGeracaoScript.setPreferredSize(new java.awt.Dimension(500, 300));
-        panelResultadoGeracaoScript.setLayout(new java.awt.BorderLayout());
+        panelScriptResult.setMinimumSize(panelScriptResult.getPreferredSize());
+        panelScriptResult.setName("panelScriptResult"); // NOI18N
+        panelScriptResult.setPreferredSize(new java.awt.Dimension(500, 300));
+        panelScriptResult.setLayout(new java.awt.BorderLayout());
 
-        scrollPaneResultadoGeracaoScript.setMinimumSize(scrollPaneResultadoGeracaoScript.getPreferredSize());
-        scrollPaneResultadoGeracaoScript.setName("scrollPaneResultadoGeracaoScript"); // NOI18N
-        scrollPaneResultadoGeracaoScript.setPreferredSize(new java.awt.Dimension(500, 350));
+        scrollPaneScriptResult.setMinimumSize(scrollPaneScriptResult.getPreferredSize());
+        scrollPaneScriptResult.setName("scrollPaneScriptResult"); // NOI18N
+        scrollPaneScriptResult.setPreferredSize(new java.awt.Dimension(500, 350));
 
-        txtAreaResultadoGeracaoScript.setColumns(20);
-        txtAreaResultadoGeracaoScript.setRows(5);
-        txtAreaResultadoGeracaoScript.setName("txtAreaResultadoGeracaoScript"); // NOI18N
-        txtAreaResultadoGeracaoScript.setOpaque(false);
-        scrollPaneResultadoGeracaoScript.setViewportView(txtAreaResultadoGeracaoScript);
+        txtAreaScriptResult.setColumns(20);
+        txtAreaScriptResult.setRows(5);
+        txtAreaScriptResult.setName("txtAreaScriptResult"); // NOI18N
+        txtAreaScriptResult.setOpaque(false);
+        scrollPaneScriptResult.setViewportView(txtAreaScriptResult);
 
-        panelResultadoGeracaoScript.add(scrollPaneResultadoGeracaoScript, java.awt.BorderLayout.CENTER);
+        panelScriptResult.add(scrollPaneScriptResult, java.awt.BorderLayout.CENTER);
 
-        panelPrincipal.add(panelResultadoGeracaoScript, java.awt.BorderLayout.CENTER);
+        panelMain.add(panelScriptResult, java.awt.BorderLayout.CENTER);
 
-        panelConverterCampos.setMinimumSize(panelConverterCampos.getPreferredSize());
-        panelConverterCampos.setName("panelConverterCampos"); // NOI18N
-        panelConverterCampos.setPreferredSize(new java.awt.Dimension(200, 500));
-        panelConverterCampos.setLayout(new java.awt.BorderLayout());
+        panelFieldsTranslate.setMinimumSize(panelFieldsTranslate.getPreferredSize());
+        panelFieldsTranslate.setName("panelFieldsTranslate"); // NOI18N
+        panelFieldsTranslate.setPreferredSize(new java.awt.Dimension(200, 500));
+        panelFieldsTranslate.setLayout(new java.awt.BorderLayout());
 
-        scroolPaneConverterCampos.setBackground(resourceMap.getColor("scroolPaneConverterCampos.background")); // NOI18N
-        scroolPaneConverterCampos.setMinimumSize(scroolPaneConverterCampos.getPreferredSize());
-        scroolPaneConverterCampos.setName("scroolPaneConverterCampos"); // NOI18N
+        lblTranslateDatatype.setFont(resourceMap.getFont("lblTranslateDatatype.font")); // NOI18N
+        lblTranslateDatatype.setForeground(resourceMap.getColor("lblTranslateDatatype.foreground")); // NOI18N
+        lblTranslateDatatype.setText(resourceMap.getString("lblTranslateDatatype.text")); // NOI18N
+        lblTranslateDatatype.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        lblTranslateDatatype.setName("lblTranslateDatatype"); // NOI18N
+        lblTranslateDatatype.setOpaque(true);
+        lblTranslateDatatype.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        panelFieldsTranslate.add(lblTranslateDatatype, java.awt.BorderLayout.NORTH);
 
-        tableConverterCampos.setAutoCreateRowSorter(true);
-        tableConverterCampos.setModel(new javax.swing.table.DefaultTableModel(
+        scroolPaneFieldsTranslate.setBackground(resourceMap.getColor("scroolPaneFieldsTranslate.background")); // NOI18N
+        scroolPaneFieldsTranslate.setMinimumSize(scroolPaneFieldsTranslate.getPreferredSize());
+        scroolPaneFieldsTranslate.setName("scroolPaneFieldsTranslate"); // NOI18N
+
+        tableDatatypes.setAutoCreateRowSorter(true);
+        tableDatatypes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null}
             },
@@ -575,90 +574,81 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableConverterCampos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        tableConverterCampos.setDragEnabled(true);
-        tableConverterCampos.setName("tableConverterCampos"); // NOI18N
-        scroolPaneConverterCampos.setViewportView(tableConverterCampos);
+        tableDatatypes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tableDatatypes.setDragEnabled(true);
+        tableDatatypes.setName("tableDatatypes"); // NOI18N
+        scroolPaneFieldsTranslate.setViewportView(tableDatatypes);
 
-        panelConverterCampos.add(scroolPaneConverterCampos, java.awt.BorderLayout.CENTER);
+        panelFieldsTranslate.add(scroolPaneFieldsTranslate, java.awt.BorderLayout.CENTER);
 
-        lblTraduzirTipo.setFont(resourceMap.getFont("lblTraduzirTipo.font")); // NOI18N
-        lblTraduzirTipo.setForeground(resourceMap.getColor("lblTraduzirTipo.foreground")); // NOI18N
-        lblTraduzirTipo.setText(resourceMap.getString("lblTraduzirTipo.text")); // NOI18N
-        lblTraduzirTipo.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        lblTraduzirTipo.setName("lblTraduzirTipo"); // NOI18N
-        lblTraduzirTipo.setOpaque(true);
-        lblTraduzirTipo.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        panelConverterCampos.add(lblTraduzirTipo, java.awt.BorderLayout.NORTH);
+        panelMain.add(panelFieldsTranslate, java.awt.BorderLayout.EAST);
 
-        panelPrincipal.add(panelConverterCampos, java.awt.BorderLayout.EAST);
+        getContentPane().add(panelMain, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(panelPrincipal, java.awt.BorderLayout.CENTER);
+        menuBarMain.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+        menuBarMain.setFont(resourceMap.getFont("menuBarMain.font")); // NOI18N
+        menuBarMain.setMargin(new java.awt.Insets(0, 10, 0, 10));
+        menuBarMain.setName("menuBarMain"); // NOI18N
+        menuBarMain.setPreferredSize(new java.awt.Dimension(700, 30));
 
-        menuBarPrincipal.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)));
-        menuBarPrincipal.setFont(resourceMap.getFont("menuBarPrincipal.font")); // NOI18N
-        menuBarPrincipal.setMargin(new java.awt.Insets(0, 10, 0, 10));
-        menuBarPrincipal.setName("menuBarPrincipal"); // NOI18N
-        menuBarPrincipal.setPreferredSize(new java.awt.Dimension(700, 30));
+        menuFile.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(resourceMap.getColor("menuFile.border.outsideBorder.lineColor"), 1, true), javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 5))); // NOI18N
+        menuFile.setForeground(resourceMap.getColor("menuFile.foreground")); // NOI18N
+        menuFile.setText(resourceMap.getString("menuFile.text")); // NOI18N
+        menuFile.setFont(resourceMap.getFont("menuFile.font")); // NOI18N
+        menuFile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        menuFile.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        menuFile.setIconTextGap(10);
+        menuFile.setName("menuFile"); // NOI18N
+        menuFile.setPreferredSize(new java.awt.Dimension(80, 30));
 
-        menuArquivo.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(resourceMap.getColor("menuArquivo.border.outsideBorder.lineColor"), 1, true), javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 5))); // NOI18N
-        menuArquivo.setForeground(resourceMap.getColor("menuArquivo.foreground")); // NOI18N
-        menuArquivo.setText(resourceMap.getString("menuArquivo.text")); // NOI18N
-        menuArquivo.setFont(resourceMap.getFont("menuArquivo.font")); // NOI18N
-        menuArquivo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        menuArquivo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        menuArquivo.setIconTextGap(10);
-        menuArquivo.setName("menuArquivo"); // NOI18N
-        menuArquivo.setPreferredSize(new java.awt.Dimension(80, 30));
-
-        cmdAbrirModelo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
-        cmdAbrirModelo.setText(resourceMap.getString("cmdAbrirModelo.text")); // NOI18N
-        cmdAbrirModelo.setToolTipText(resourceMap.getString("cmdAbrirModelo.toolTipText")); // NOI18N
-        cmdAbrirModelo.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        cmdAbrirModelo.setName("cmdAbrirModelo"); // NOI18N
-        cmdAbrirModelo.addActionListener(new java.awt.event.ActionListener() {
+        cmdOpenModel.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
+        cmdOpenModel.setText(resourceMap.getString("cmdOpenModel.text")); // NOI18N
+        cmdOpenModel.setToolTipText(resourceMap.getString("cmdOpenModel.toolTipText")); // NOI18N
+        cmdOpenModel.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        cmdOpenModel.setName("cmdOpenModel"); // NOI18N
+        cmdOpenModel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdAbrirModeloActionPerformed(evt);
+                cmdOpenModelActionPerformed(evt);
             }
         });
-        menuArquivo.add(cmdAbrirModelo);
+        menuFile.add(cmdOpenModel);
 
-        cmdSalvarScript.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
-        cmdSalvarScript.setText(resourceMap.getString("cmdSalvarScript.text")); // NOI18N
-        cmdSalvarScript.setToolTipText(resourceMap.getString("cmdSalvarScript.toolTipText")); // NOI18N
-        cmdSalvarScript.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        cmdSalvarScript.setName("cmdSalvarScript"); // NOI18N
-        cmdSalvarScript.addActionListener(new java.awt.event.ActionListener() {
+        cmdSaveScript.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
+        cmdSaveScript.setText(resourceMap.getString("cmdSaveScript.text")); // NOI18N
+        cmdSaveScript.setToolTipText(resourceMap.getString("cmdSaveScript.toolTipText")); // NOI18N
+        cmdSaveScript.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        cmdSaveScript.setName("cmdSaveScript"); // NOI18N
+        cmdSaveScript.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdSalvarScriptActionPerformed(evt);
+                cmdSaveScriptActionPerformed(evt);
             }
         });
-        menuArquivo.add(cmdSalvarScript);
+        menuFile.add(cmdSaveScript);
 
         separatorSair.setName("separatorSair"); // NOI18N
         separatorSair.setOpaque(true);
-        menuArquivo.add(separatorSair);
+        menuFile.add(separatorSair);
 
-        cmdSair.setText(resourceMap.getString("cmdSair.text")); // NOI18N
-        cmdSair.setToolTipText(resourceMap.getString("cmdSair.toolTipText")); // NOI18N
-        cmdSair.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        cmdSair.setName("cmdSair"); // NOI18N
-        cmdSair.addActionListener(new java.awt.event.ActionListener() {
+        cmdExit.setText(resourceMap.getString("cmdExit.text")); // NOI18N
+        cmdExit.setToolTipText(resourceMap.getString("cmdExit.toolTipText")); // NOI18N
+        cmdExit.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        cmdExit.setName("cmdExit"); // NOI18N
+        cmdExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdSairActionPerformed(evt);
+                cmdExitActionPerformed(evt);
             }
         });
-        menuArquivo.add(cmdSair);
+        menuFile.add(cmdExit);
 
-        menuBarPrincipal.add(menuArquivo);
+        menuBarMain.add(menuFile);
 
-        menuAparencia.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(resourceMap.getColor("menuAparencia.border.outsideBorder.lineColor"), 1, true), javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 5))); // NOI18N
-        menuAparencia.setForeground(resourceMap.getColor("menuAparencia.foreground")); // NOI18N
-        menuAparencia.setText(resourceMap.getString("menuAparencia.text")); // NOI18N
-        menuAparencia.setToolTipText(resourceMap.getString("menuAparencia.toolTipText")); // NOI18N
-        menuAparencia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        menuAparencia.setName("menuAparencia"); // NOI18N
-        menuAparencia.setPreferredSize(new java.awt.Dimension(80, 30));
+        menuLayout.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(resourceMap.getColor("menuLayout.border.outsideBorder.lineColor"), 1, true), javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 5))); // NOI18N
+        menuLayout.setForeground(resourceMap.getColor("menuLayout.foreground")); // NOI18N
+        menuLayout.setText(resourceMap.getString("menuLayout.text")); // NOI18N
+        menuLayout.setToolTipText(resourceMap.getString("menuLayout.toolTipText")); // NOI18N
+        menuLayout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        menuLayout.setName("menuLayout"); // NOI18N
+        menuLayout.setPreferredSize(new java.awt.Dimension(80, 30));
 
         buttonGroupLookAndFeel.add(rdLFAutumn);
         rdLFAutumn.setText(resourceMap.getString("rdLFAutumn.text")); // NOI18N
@@ -670,7 +660,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFAutumnActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFAutumn);
+        menuLayout.add(rdLFAutumn);
 
         buttonGroupLookAndFeel.add(rdLFBusiness);
         rdLFBusiness.setText(resourceMap.getString("rdLFBusiness.text")); // NOI18N
@@ -682,7 +672,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFBusinessActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFBusiness);
+        menuLayout.add(rdLFBusiness);
 
         buttonGroupLookAndFeel.add(rdLFBusinessBlackSteel);
         rdLFBusinessBlackSteel.setText(resourceMap.getString("rdLFBusinessBlackSteel.text")); // NOI18N
@@ -694,7 +684,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFBusinessBlackSteelActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFBusinessBlackSteel);
+        menuLayout.add(rdLFBusinessBlackSteel);
 
         buttonGroupLookAndFeel.add(rdLFBusinessBlueSteel);
         rdLFBusinessBlueSteel.setText(resourceMap.getString("rdLFBusinessBlueSteel.text")); // NOI18N
@@ -706,7 +696,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFBusinessBlueSteelActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFBusinessBlueSteel);
+        menuLayout.add(rdLFBusinessBlueSteel);
 
         buttonGroupLookAndFeel.add(rdLFChallengerDeep);
         rdLFChallengerDeep.setText(resourceMap.getString("rdLFChallengerDeep.text")); // NOI18N
@@ -718,7 +708,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFChallengerDeepActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFChallengerDeep);
+        menuLayout.add(rdLFChallengerDeep);
 
         buttonGroupLookAndFeel.add(rdLFCreme);
         rdLFCreme.setText(resourceMap.getString("rdLFCreme.text")); // NOI18N
@@ -730,7 +720,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFCremeActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFCreme);
+        menuLayout.add(rdLFCreme);
 
         buttonGroupLookAndFeel.add(rdLFCremeCoffee);
         rdLFCremeCoffee.setText(resourceMap.getString("rdLFCremeCoffee.text")); // NOI18N
@@ -742,7 +732,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFCremeCoffeeActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFCremeCoffee);
+        menuLayout.add(rdLFCremeCoffee);
 
         buttonGroupLookAndFeel.add(rdLFEmeraldDusk);
         rdLFEmeraldDusk.setText(resourceMap.getString("rdLFEmeraldDusk.text")); // NOI18N
@@ -754,7 +744,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFEmeraldDuskActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFEmeraldDusk);
+        menuLayout.add(rdLFEmeraldDusk);
 
         buttonGroupLookAndFeel.add(rdLFMagma);
         rdLFMagma.setText(resourceMap.getString("rdLFMagma.text")); // NOI18N
@@ -766,7 +756,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFMagmaActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFMagma);
+        menuLayout.add(rdLFMagma);
 
         buttonGroupLookAndFeel.add(rdLFMistAqua);
         rdLFMistAqua.setText(resourceMap.getString("rdLFMistAqua.text")); // NOI18N
@@ -778,7 +768,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFMistAquaActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFMistAqua);
+        menuLayout.add(rdLFMistAqua);
 
         buttonGroupLookAndFeel.add(rdLFMistSilver);
         rdLFMistSilver.setText(resourceMap.getString("rdLFMistSilver.text")); // NOI18N
@@ -790,7 +780,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFMistSilverActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFMistSilver);
+        menuLayout.add(rdLFMistSilver);
 
         buttonGroupLookAndFeel.add(rdLFModerate);
         rdLFModerate.setText(resourceMap.getString("rdLFModerate.text")); // NOI18N
@@ -802,7 +792,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFModerateActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFModerate);
+        menuLayout.add(rdLFModerate);
 
         buttonGroupLookAndFeel.add(rdLFNebula);
         rdLFNebula.setText(resourceMap.getString("rdLFNebula.text")); // NOI18N
@@ -814,7 +804,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFNebulaActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFNebula);
+        menuLayout.add(rdLFNebula);
 
         buttonGroupLookAndFeel.add(rdLFNebulaBrickWall);
         rdLFNebulaBrickWall.setText(resourceMap.getString("rdLFNebulaBrickWall.text")); // NOI18N
@@ -826,7 +816,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFNebulaBrickWallActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFNebulaBrickWall);
+        menuLayout.add(rdLFNebulaBrickWall);
 
         buttonGroupLookAndFeel.add(rdLFOfficeBlue2007);
         rdLFOfficeBlue2007.setText(resourceMap.getString("rdLFOfficeBlue2007.text")); // NOI18N
@@ -838,7 +828,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFOfficeBlue2007ActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFOfficeBlue2007);
+        menuLayout.add(rdLFOfficeBlue2007);
 
         buttonGroupLookAndFeel.add(rdLFOfficeSilver2007);
         rdLFOfficeSilver2007.setText(resourceMap.getString("rdLFOfficeSilver2007.text")); // NOI18N
@@ -850,7 +840,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFOfficeSilver2007ActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFOfficeSilver2007);
+        menuLayout.add(rdLFOfficeSilver2007);
 
         buttonGroupLookAndFeel.add(rdLFRaven);
         rdLFRaven.setText(resourceMap.getString("rdLFRaven.text")); // NOI18N
@@ -862,7 +852,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFRavenActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFRaven);
+        menuLayout.add(rdLFRaven);
 
         buttonGroupLookAndFeel.add(rdLFRavenGraphite);
         rdLFRavenGraphite.setText(resourceMap.getString("rdLFRavenGraphite.text")); // NOI18N
@@ -874,7 +864,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFRavenGraphiteActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFRavenGraphite);
+        menuLayout.add(rdLFRavenGraphite);
 
         buttonGroupLookAndFeel.add(rdLFRavenGraphiteGlass);
         rdLFRavenGraphiteGlass.setText(resourceMap.getString("rdLFRavenGraphiteGlass.text")); // NOI18N
@@ -886,7 +876,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFRavenGraphiteGlassActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFRavenGraphiteGlass);
+        menuLayout.add(rdLFRavenGraphiteGlass);
 
         buttonGroupLookAndFeel.add(rdLFSahara);
         rdLFSahara.setText(resourceMap.getString("rdLFSahara.text")); // NOI18N
@@ -898,23 +888,22 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 rdLFSaharaActionPerformed(evt);
             }
         });
-        menuAparencia.add(rdLFSahara);
+        menuLayout.add(rdLFSahara);
 
-        menuBarPrincipal.add(menuAparencia);
+        menuBarMain.add(menuLayout);
 
-        menuAjuda.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(resourceMap.getColor("menuAjuda.border.outsideBorder.lineColor"), 1, true), javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 5))); // NOI18N
-        menuAjuda.setForeground(resourceMap.getColor("menuAjuda.foreground")); // NOI18N
-        menuAjuda.setText(resourceMap.getString("menuAjuda.text")); // NOI18N
-        menuAjuda.setFont(resourceMap.getFont("menuAjuda.font")); // NOI18N
-        menuAjuda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        menuAjuda.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        menuAjuda.setIconTextGap(10);
-        menuAjuda.setName("menuAjuda"); // NOI18N
-        menuAjuda.setPreferredSize(new java.awt.Dimension(80, 30));
+        menuHelp.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(resourceMap.getColor("menuHelp.border.outsideBorder.lineColor"), 1, true), javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 5))); // NOI18N
+        menuHelp.setForeground(resourceMap.getColor("menuHelp.foreground")); // NOI18N
+        menuHelp.setText(resourceMap.getString("menuHelp.text")); // NOI18N
+        menuHelp.setFont(resourceMap.getFont("menuHelp.font")); // NOI18N
+        menuHelp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        menuHelp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        menuHelp.setIconTextGap(10);
+        menuHelp.setName("menuHelp"); // NOI18N
+        menuHelp.setPreferredSize(new java.awt.Dimension(80, 30));
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(dbd4topostgres.Dbd4topostgresApp.class).getContext().getActionMap(FrameDBD4ToPostgres.class, this);
         aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
-        aboutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         aboutMenuItem.setText(resourceMap.getString("aboutMenuItem.text")); // NOI18N
         aboutMenuItem.setToolTipText(resourceMap.getString("aboutMenuItem.toolTipText")); // NOI18N
         aboutMenuItem.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
@@ -924,30 +913,30 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 aboutMenuItemActionPerformed(evt);
             }
         });
-        menuAjuda.add(aboutMenuItem);
+        menuHelp.add(aboutMenuItem);
 
-        menuBarPrincipal.add(menuAjuda);
+        menuBarMain.add(menuHelp);
 
-        setJMenuBar(menuBarPrincipal);
+        setJMenuBar(menuBarMain);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void chkAddForeignKeyStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkAddForeignKeyStateChanged
-        // TODO add your handling code here:
+        
         if (!this.chkAddForeignKey.isSelected()) {
             this.chkAddForeignKeyWithRelationName.setSelected(false);
         }
 }//GEN-LAST:event_chkAddForeignKeyStateChanged
 
     private void chkAddForeignKeyWithRelationNameStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkAddForeignKeyWithRelationNameStateChanged
-        // TODO add your handling code here:
+        
         if (this.chkAddForeignKeyWithRelationName.isSelected()) {
             this.chkAddForeignKey.setSelected(true);
         }
 }//GEN-LAST:event_chkAddForeignKeyWithRelationNameStateChanged
 
-    private void cmdSelecionarTodasOpcoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSelecionarTodasOpcoesActionPerformed
+    private void cmdSelectAllOptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSelectAllOptionsActionPerformed
 
         this.chkAddAlternateKey.setSelected(true);
         this.chkAddForeignKey.setSelected(true);
@@ -958,9 +947,9 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         this.chkDropTable.setSelected(true);
         this.chkAddComments.setSelected(true);
         this.chkStandardInserts.setSelected(true);
-    }//GEN-LAST:event_cmdSelecionarTodasOpcoesActionPerformed
+    }//GEN-LAST:event_cmdSelectAllOptionsActionPerformed
 
-    private void cmdLimparOpcoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLimparOpcoesActionPerformed
+    private void cmdResetAllOptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdResetAllOptionsActionPerformed
         this.chkAddAlternateKey.setSelected(false);
         this.chkAddForeignKey.setSelected(false);
         this.chkAddForeignKeyWithRelationName.setSelected(false);
@@ -970,100 +959,92 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         this.chkDropTable.setSelected(false);
         this.chkAddComments.setSelected(false);
         this.chkStandardInserts.setSelected(false);
-}//GEN-LAST:event_cmdLimparOpcoesActionPerformed
+}//GEN-LAST:event_cmdResetAllOptionsActionPerformed
 
-    private void cmdGerarScriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdGerarScriptActionPerformed
-        // TODO add your handling code here:
+    private void cmdGenerateScriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdGenerateScriptActionPerformed
+        
         if (this.txtFileName.length() > 0) {
             try {
-                DBDesignerParser DBDesignerParser = new DBDesignerParser(this.txtFileName);
+                DBDesignerParser dbdesignerParser = new DBDesignerParser(this.txtFileName);
                 HashSet setTabelasSelecionadas = new HashSet();
-                FrameDBD4ToPostgres.DBDesignerTableItem idTabela = null;
-                for (int i = 0; i < this.listSelecaoTabelas.getModel().getSize(); i++) {
-                    idTabela = (FrameDBD4ToPostgres.DBDesignerTableItem) this.listSelecaoTabelas.getModel().getElementAt(i);
-                    if (idTabela.isSelected()) {
-                        setTabelasSelecionadas.add(idTabela.getName());
+                FrameDBD4ToPostgres.DBDesignerTableItem idTable = null;
+                for (int i = 0; i < this.listTableSelections.getModel().getSize(); i++) {
+                    idTable = (FrameDBD4ToPostgres.DBDesignerTableItem) this.listTableSelections.getModel().getElementAt(i);
+                    if (idTable.isSelected()) {
+                        setTabelasSelecionadas.add(idTable.getName());
                     }
                 }
-                //this.txtAreaResultadoGeracaoScript.setText("");
-
-
-                //
-                // OID = Cria string
-                String descricaoOID = null;
+               
+                // OID
+                String descriptionOID = null;
                 if (this.chkObjectIdentification.isSelected()) {
                     if (this.radioWithOID.isSelected()) {
-                        descricaoOID = "WITH (OIDS=TRUE)";
+                        descriptionOID = "WITH (OIDS=TRUE)"; //NOI18N
                     } else {
-                        descricaoOID = "WITH (OIDS=FALSE)";
+                        descriptionOID = "WITH (OIDS=FALSE)"; //NOI18N
                     }
                 }
                 //
                 //
                 StringBuilder scriptSql = new StringBuilder();
                 if (this.chkCreateTable.isSelected() || this.chkAddComments.isSelected() || (this.chkCreateTable.isSelected() && this.chkDropTable.isSelected())) {
-                    // Obtem o nome de colunas da lista de colunas da tela
-                    // Move valores para a lista na tela
-                    DefaultTableModel modelTiposCampos = (DefaultTableModel) this.tableConverterCampos.getModel();
-                    Vector vetorCampos = modelTiposCampos.getDataVector();
-                    // Convert para lista de campos para hashmap
-                    HashMap<String, String> mapCamposTraducao = new HashMap();
-                    String campoOriginal = null;
-                    String campoScript = null;
-                    for (int i = 0; i < vetorCampos.size(); i++) {
-                        campoOriginal = (String) ((Vector) vetorCampos.elementAt(i)).elementAt(0);
-                        campoOriginal = campoOriginal.replaceAll(" ", "");
+                    // Create a list of data types translations configured in screen
+                    DefaultTableModel modelDatatypes = (DefaultTableModel) this.tableDatatypes.getModel();
+                    Vector vectorDatatypes = modelDatatypes.getDataVector();
+                    // Convert to hashmap
+                    HashMap<String, String> mapDatatypesTranslation = new HashMap();
+                    String sourceDatatype = null;
+                    String targetDatatype = null;
+                    for (int i = 0; i < vectorDatatypes.size(); i++) {
+                        sourceDatatype = (String) ((Vector) vectorDatatypes.elementAt(i)).elementAt(0);
+                        sourceDatatype = sourceDatatype.replaceAll(" ", ""); //NOI18N
                         //
-                        campoScript = (String) ((Vector) vetorCampos.elementAt(i)).elementAt(1);
-                        campoScript = campoScript.replaceAll(" ", "");
+                        targetDatatype = (String) ((Vector) vectorDatatypes.elementAt(i)).elementAt(1);
+                        targetDatatype = targetDatatype.replaceAll(" ", ""); //NOI18N
                         //
-                        mapCamposTraducao.put(campoOriginal, campoScript);
+                        mapDatatypesTranslation.put(sourceDatatype, targetDatatype);
                     }
-                    // Executa chamada Create Tables
+                    // Create Table
                     //
-                    scriptSql.append(DBDesignerParser.sqlCreateTable(setTabelasSelecionadas, mapCamposTraducao, this.txtOwner.getText(), descricaoOID, this.chkCreateTable.isSelected(), this.chkAddComments.isSelected(), this.chkDropTable.isSelected()));
-                    scriptSql.append("\r\n");
+                    scriptSql.append(dbdesignerParser.sqlCreateTable(setTabelasSelecionadas, mapDatatypesTranslation, this.txtOwner.getText(), descriptionOID, this.chkCreateTable.isSelected(), this.chkAddComments.isSelected(), this.chkDropTable.isSelected()));
+                    scriptSql.append("\r\n"); //NOI18N
                 }
                 if (this.chkCreateView.isSelected() || (this.chkCreateView.isSelected() &&this.chkDropTable.isSelected())) {
-                    scriptSql.append(DBDesignerParser.sqlCreateView(setTabelasSelecionadas, this.txtOwner.getText(), this.chkCreateView.isSelected(), this.chkDropTable.isSelected()));
-                    scriptSql.append("\r\n");
+                    scriptSql.append(dbdesignerParser.sqlCreateView(setTabelasSelecionadas, this.txtOwner.getText(), this.chkCreateView.isSelected(), this.chkDropTable.isSelected()));
+                    scriptSql.append("\r\n"); //NOI18N
                 }
                 if (this.chkAddForeignKey.isSelected()) {
-                    scriptSql.append(DBDesignerParser.sqlCreateForeingKey(setTabelasSelecionadas, this.chkAddForeignKeyWithRelationName.isSelected()));
-                    scriptSql.append("\r\n");
+                    scriptSql.append(dbdesignerParser.sqlCreateForeingKey(setTabelasSelecionadas, this.chkAddForeignKeyWithRelationName.isSelected()));
+                    scriptSql.append("\r\n"); //NOI18N
                 }
                 if (this.chkAddAlternateKey.isSelected() || (this.chkAddAlternateKey.isSelected() && this.chkDropTable.isSelected())) {
-                    scriptSql.append(DBDesignerParser.sqlCreateAlternatingKey(setTabelasSelecionadas, this.chkAddAlternateKey.isSelected(), this.chkDropTable.isSelected()));
-                    scriptSql.append("\r\n");
+                    scriptSql.append(dbdesignerParser.sqlCreateAlternatingKey(setTabelasSelecionadas, this.chkAddAlternateKey.isSelected(), this.chkDropTable.isSelected()));
+                    scriptSql.append("\r\n"); //NOI18N
                 }
-                if (this.chkCreateSequence.isSelected() || (this.chkCreateSequence.isSelected() && this.chkDropTable.isSelected())) {
-                    // Cria a sequencia
-                    scriptSql.append(DBDesignerParser.sqlCreateSequence(setTabelasSelecionadas, this.txtOwner.getText(), this.chkCreateSequence.isSelected(), this.chkDropTable.isSelected()));
-                    scriptSql.append("\r\n");
+                if (this.chkCreateSequence.isSelected() || (this.chkCreateSequence.isSelected() && this.chkDropTable.isSelected())) {                    
+                    scriptSql.append(dbdesignerParser.sqlCreateSequence(setTabelasSelecionadas, this.txtOwner.getText(), this.chkCreateSequence.isSelected(), this.chkDropTable.isSelected()));
+                    scriptSql.append("\r\n"); //NOI18N
                     if (this.chkCreateSequence.isSelected()) {
-                        // Insere a sequencia como default value
-                        scriptSql.append(DBDesignerParser.sqlSetDefault(setTabelasSelecionadas));
-                        scriptSql.append("\r\n");
+                        // Insert the sequence as default value
+                        scriptSql.append(dbdesignerParser.sqlSetDefault(setTabelasSelecionadas));
+                        scriptSql.append("\r\n"); //NOI18N
                     }
                 }
-                //if (this.chkSetDefautValue.isSelected()) {
-                //    scriptSql.append(dbDesignerParser.sqlSetDefault(setTabelasSelecionadas));
-                //   scriptSql.append("\r\n");
-                // }
+               
 
                 if (this.chkStandardInserts.isSelected()) {
-                    scriptSql.append(DBDesignerParser.sqlCreateTableStandardInserts(setTabelasSelecionadas));
-                    scriptSql.append("\r\n");
+                    scriptSql.append(dbdesignerParser.sqlCreateTableStandardInserts(setTabelasSelecionadas));
+                    scriptSql.append("\r\n"); //NOI18N
                 }
 
-                this.txtAreaResultadoGeracaoScript.setText(scriptSql.toString());
-                this.txtAreaResultadoGeracaoScript.setCaretPosition(0);
+                this.txtAreaScriptResult.setText(scriptSql.toString());
+                this.txtAreaScriptResult.setCaretPosition(0);
 
             } catch (Exception e1) {
-                JOptionPane.showMessageDialog(null, "Erro ao gerar sql." + e1.getMessage());
+                JOptionPane.showMessageDialog(null, java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("FAIL TO GENERATE SQL SCRIPT") + e1.getMessage());
             }
         }
-}//GEN-LAST:event_cmdGerarScriptActionPerformed
+}//GEN-LAST:event_cmdGenerateScriptActionPerformed
 
     private void chkObjectIdentificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkObjectIdentificationActionPerformed
         if (this.chkObjectIdentification.isSelected()) {
@@ -1075,15 +1056,15 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         }
 }//GEN-LAST:event_chkObjectIdentificationActionPerformed
 
-    private void cmdAbrirModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAbrirModeloActionPerformed
-        // Seleciona o ultimo arquivo aberto
+    private void cmdOpenModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdOpenModelActionPerformed
+        // Select last directory opened to save
         JFileChooser fc = null;
         //
-        if (this.diretorioCorrenteEntrada != null) {
-            fc = new JFileChooser(this.diretorioCorrenteEntrada);
+        if (this.currentInputDirectory != null) {
+            fc = new JFileChooser(this.currentInputDirectory);
         } else {
-            String lastInputDir = this.preferences.get("LAST_INPUT_DIR", "");
-            if (lastInputDir != null && (!lastInputDir.trim().equals(""))) {
+            String lastInputDir = this.preferences.get("LAST_INPUT_DIR", ""); //NOI18N
+            if (lastInputDir != null && (!lastInputDir.trim().equals(""))) { //NOI18N
                 fc = new JFileChooser(lastInputDir);
             } else {
                 fc = new JFileChooser();
@@ -1091,7 +1072,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
         }
         fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        FileFilter fileFilter = new FileNameExtensionFilter("DB Designer Model 4 XML", "xml", "XML");
+        FileFilter fileFilter = new FileNameExtensionFilter("DB Designer Model 4 XML", "xml", "XML"); //NOI18N
         fc.addChoosableFileFilter(fileFilter);
 
         fc.setAcceptAllFileFilterUsed(false);
@@ -1099,8 +1080,8 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
 
         fc.setFileFilter(fileFilter);
-        int res = fc.showDialog(this, "Abrir Dbdesigner4 Model");
-        this.diretorioCorrenteEntrada = fc.getCurrentDirectory();
+        int res = fc.showDialog(this, java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("OPEN DBDESIGNER4 MODEL"));
+        this.currentInputDirectory = fc.getCurrentDirectory();
 
 
 
@@ -1109,39 +1090,37 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 File file = fc.getSelectedFile();
 
                 //
-                this.preferences.put("LAST_INPUT_DIR", file.getAbsolutePath());
+                this.preferences.put("LAST_INPUT_DIR", file.getAbsolutePath()); //NOI18N
                 //
                 this.openModel(file);
 
             } catch (FileNotFoundException e1) {
-                JOptionPane.showMessageDialog(this, "Arquivo não encontrado");
+                JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("FILE NOT FOUND"));
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Erro ao ler o arquivo. Verifique se o arquivo foi gerado pelo DBDesigner 4.");
+                JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("FAIL IN READ FILE. CHECK IF THE FILE IS GENERATED BY DBDESIGNER 4."));
             }
 
 
         } else {
-            JOptionPane.showMessageDialog(this, "Voce nao selecionou nenhum arquivo.");
+            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("FILE NOT SELECTED."));
         }
 
-    }//GEN-LAST:event_cmdAbrirModeloActionPerformed
+    }//GEN-LAST:event_cmdOpenModelActionPerformed
 
-    private void cmdSalvarScriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSalvarScriptActionPerformed
-        // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
+    private void cmdSaveScriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSaveScriptActionPerformed
+        
+        try {           
             JFileChooser fc = null;
-            //
-            //
-            if (this.diretorioCorrenteSaida != null) {
-                fc = new JFileChooser(this.diretorioCorrenteSaida);
+            //           
+            if (this.currentOutputDirectory != null) {
+                fc = new JFileChooser(this.currentOutputDirectory);
             } else {
-                String lastOutputDir = this.preferences.get("LAST_OUTPUT_DIR", "");
-                if (lastOutputDir != null && (!lastOutputDir.trim().equals(""))) {
+                String lastOutputDir = this.preferences.get("LAST_OUTPUT_DIR", ""); //NOI18N
+                if (lastOutputDir != null && (!lastOutputDir.trim().equals(""))) { //NOI18N
                     fc = new JFileChooser(lastOutputDir);
                 } else {
-                    if (this.diretorioCorrenteEntrada != null) {
-                        fc = new JFileChooser(this.diretorioCorrenteEntrada.getPath());
+                    if (this.currentInputDirectory != null) {
+                        fc = new JFileChooser(this.currentInputDirectory.getPath());
                     } else {
                         fc = new JFileChooser();
                     }
@@ -1151,7 +1130,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
             //
 
             fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            FileFilter fileFilter = new FileNameExtensionFilter("Script SQL", "sql");
+            FileFilter fileFilter = new FileNameExtensionFilter("Script SQL", "sql"); //NOI18N
             fc.addChoosableFileFilter(fileFilter);
 
             fc.setAcceptAllFileFilterUsed(false);
@@ -1159,33 +1138,33 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
 
             fc.setFileFilter(fileFilter);
-            int res = fc.showSaveDialog(this);
+            int res = fc.showDialog(this,java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("SAVE TO..."));
 
-            this.diretorioCorrenteSaida = fc.getCurrentDirectory();
+            this.currentOutputDirectory = fc.getCurrentDirectory();
 
 
             if (res == JFileChooser.APPROVE_OPTION) {
 
                 File file = fc.getSelectedFile();
                 //
-                this.preferences.put("LAST_OUTPUT_DIR", this.diretorioCorrenteSaida.getAbsolutePath());
+                this.preferences.put("LAST_OUTPUT_DIR", this.currentOutputDirectory.getAbsolutePath()); //NOI18N
                 //
 
-                String nomeArquivo = file.getPath();
-                if (!nomeArquivo.endsWith(".sql")) {
-                    nomeArquivo = nomeArquivo + ".sql";
-                    file = new File(nomeArquivo);
+                String fileName = file.getPath();
+                if (!fileName.endsWith(".sql")) { //NOI18N
+                    fileName = fileName + ".sql"; //NOI18N
+                    file = new File(fileName);
                 }
-                int opcaoGravar = JOptionPane.YES_OPTION;
+                int saveOption = JOptionPane.YES_OPTION;
                 if (file.exists()) {
                     //default icon, custom title
-                    opcaoGravar = JOptionPane.showConfirmDialog(this, "O arquivo já existe. Deseja sobrecrever?", "Arquivo existente", JOptionPane.YES_NO_OPTION);
+                    saveOption = JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("FILE ALREADY EXISTS. DO YOU WANT TO OVERWRITE IT?"), java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("FILE ALREADY EXISTS"), JOptionPane.YES_NO_OPTION);
 
                 }
-                if (opcaoGravar == JOptionPane.YES_OPTION) {
+                if (saveOption == JOptionPane.YES_OPTION) {
 
                     FileOutputStream fos = new FileOutputStream(file);
-                    fos.write(this.txtAreaResultadoGeracaoScript.getText().getBytes());
+                    fos.write(this.txtAreaScriptResult.getText().getBytes());
                     fos.close();
                 }
 
@@ -1194,159 +1173,159 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         } catch (Exception ee) {
             ee.printStackTrace();
         }
-    }//GEN-LAST:event_cmdSalvarScriptActionPerformed
+    }//GEN-LAST:event_cmdSaveScriptActionPerformed
 
-    private void cmdSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSairActionPerformed
-        // TODO add your handling code here:
+    private void cmdExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdExitActionPerformed
+      
         this.dispose();
-    }//GEN-LAST:event_cmdSairActionPerformed
+    }//GEN-LAST:event_cmdExitActionPerformed
 
     private void lookAndFellActionPerfomed(java.awt.event.ActionEvent evt) {
         try {
             String look = evt.getActionCommand();
 
-            if (look.equals("Autumn")) {
+            if (look.equals("Autumn")) { //NOI18N
                 if (!this.rdLFAutumn.isSelected()) {
                     this.rdLFAutumn.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceAutumnLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceAutumnLookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("BusinessBlackSteel")) {
+            } else if (look.equals("BusinessBlackSteel")) { //NOI18N
                 if (!this.rdLFBusinessBlackSteel.isSelected()) {
                     this.rdLFBusinessBlackSteel.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("BusinessBlueSteel")) {
+            } else if (look.equals("BusinessBlueSteel")) { //NOI18N
                 if (!this.rdLFBusinessBlueSteel.isSelected()) {
                     this.rdLFBusinessBlueSteel.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceBusinessBlueSteelLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceBusinessBlueSteelLookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("Business")) {
+            } else if (look.equals("Business")) { //NOI18N
                 if (!this.rdLFBusiness.isSelected()) {
                     this.rdLFBusiness.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceBusinessLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceBusinessLookAndFeel"); //NOI18N
                 }
 
-            } else if (look.equals("ChallengerDeep")) {
+            } else if (look.equals("ChallengerDeep")) { //NOI18N
                 if (!this.rdLFChallengerDeep.isSelected()) {
                     this.rdLFChallengerDeep.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceChallengerDeepLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceChallengerDeepLookAndFeel"); //NOI18N
                 }
 
-            } else if (look.equals("CremeCoffee")) {
+            } else if (look.equals("CremeCoffee")) { //NOI18N
                 if (!this.rdLFCremeCoffee.isSelected()) {
                     this.rdLFCremeCoffee.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceCremeCoffeeLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceCremeCoffeeLookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("Creme")) {
+            } else if (look.equals("Creme")) { //NOI18N
                 if (!this.rdLFCreme.isSelected()) {
                     this.rdLFCreme.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceCremeLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceCremeLookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("EmeraldDusk")) {
+            } else if (look.equals("EmeraldDusk")) { //NOI18N
                 if (!this.rdLFEmeraldDusk.isSelected()) {
                     this.rdLFEmeraldDusk.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceEmeraldDuskLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceEmeraldDuskLookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("Magma")) {
+            } else if (look.equals("Magma")) { //NOI18N
                 if (!this.rdLFMagma.isSelected()) {
                     this.rdLFMagma.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceMagmaLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceMagmaLookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("MistAqua")) {
+            } else if (look.equals("MistAqua")) { //NOI18N
                 if (!this.rdLFMistAqua.isSelected()) {
                     this.rdLFMistAqua.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceMistAquaLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceMistAquaLookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("MistSilver")) {
+            } else if (look.equals("MistSilver")) { //NOI18N
                 if (!this.rdLFMistSilver.isSelected()) {
                     this.rdLFMistSilver.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceMistSilverLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceMistSilverLookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("Moderate")) {
+            } else if (look.equals("Moderate")) { //NOI18N
                 if (!this.rdLFModerate.isSelected()) {
                     this.rdLFModerate.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceModerateLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceModerateLookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("NebulaBrickWall")) {
+            } else if (look.equals("NebulaBrickWall")) { //NOI18N
                 if (!this.rdLFNebulaBrickWall.isSelected()) {
                     this.rdLFNebulaBrickWall.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceNebulaBrickWallLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceNebulaBrickWallLookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("Nebula")) {
+            } else if (look.equals("Nebula")) { //NOI18N
                 if (!this.rdLFNebula.isSelected()) {
                     this.rdLFNebula.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceNebulaLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceNebulaLookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("OfficeBlue2007")) {
+            } else if (look.equals("OfficeBlue2007")) { //NOI18N
                 if (!this.rdLFOfficeBlue2007.isSelected()) {
                     this.rdLFOfficeBlue2007.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceOfficeBlue2007LookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceOfficeBlue2007LookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("OfficeSilver2007")) {
+            } else if (look.equals("OfficeSilver2007")) { //NOI18N
                 if (!this.rdLFOfficeSilver2007.isSelected()) {
                     this.rdLFOfficeSilver2007.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceOfficeSilver2007LookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceOfficeSilver2007LookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("RavenGraphiteGlass")) {
+            } else if (look.equals("RavenGraphiteGlass")) { //NOI18N
                 if (!this.rdLFRavenGraphiteGlass.isSelected()) {
                     this.rdLFRavenGraphiteGlass.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceRavenGraphiteGlassLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceRavenGraphiteGlassLookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("RavenGraphite")) {
+            } else if (look.equals("RavenGraphite")) { //NOI18N
                 if (!this.rdLFRavenGraphite.isSelected()) {
                     this.rdLFRavenGraphite.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceRavenGraphiteLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceRavenGraphiteLookAndFeel"); //NOI18N
                 }
-            } else if (look.equals("Raven")) {
+            } else if (look.equals("Raven")) { //NOI18N
                 if (!this.rdLFRaven.isSelected()) {
                     this.rdLFRaven.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceRavenLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceRavenLookAndFeel"); //NOI18N
                 }
 
-            } else if (look.equals("Sahara")) {
+            } else if (look.equals("Sahara")) { //NOI18N
                 if (!this.rdLFSahara.isSelected()) {
                     this.rdLFSahara.doClick();
                 } else {
-                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceSaharaLookAndFeel");
+                    UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceSaharaLookAndFeel"); //NOI18N
                 }
 
             }
             SwingUtilities.updateComponentTreeUI(this);
-            //this.pack();
+           
 
 
-            this.preferences.put("LAST_LOOKANDFELL", look);
-            // Setar Background
-            ((RSyntaxTextArea) this.txtAreaResultadoGeracaoScript).setBackgroundImage((Image) this.imagemBackground);
+            this.preferences.put("LAST_LOOKANDFELL", look); //NOI18N
+            // Set Background Image
+            ((RSyntaxTextArea) this.txtAreaScriptResult).setBackgroundImage((Image) this.backgroundImage);
 
 
         } catch (Exception e) {
-            //e.printStackTrace();
+            //ignore
         }
     }
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
 
-        (new FrameAjuda()).setVisible(true);
+        (new FrameHelp()).setVisible(true);
 }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     private void rdLFAutumnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdLFAutumnActionPerformed
@@ -1433,12 +1412,9 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        // Set cross-platform Java L&F (also called "Metal"
         try {
             JFrame.setDefaultLookAndFeelDecorated(true);
-            //UIManager.setLookAndFeel(javax.swing.plaf.metal.MetalLookAndFeel);
-
-
+           
             java.awt.EventQueue.invokeLater(new Runnable() {
 
                 public void run() {
@@ -1446,6 +1422,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 }
             });
         } catch (Exception e) {
+            // ignored
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1461,28 +1438,28 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
     private javax.swing.JCheckBox chkDropTable;
     private javax.swing.JCheckBox chkObjectIdentification;
     private javax.swing.JCheckBox chkStandardInserts;
-    private javax.swing.JMenuItem cmdAbrirModelo;
-    private javax.swing.JButton cmdGerarScript;
-    private javax.swing.JButton cmdLimparOpcoes;
-    private javax.swing.JMenuItem cmdSair;
-    private javax.swing.JMenuItem cmdSalvarScript;
-    private javax.swing.JButton cmdSelecionarTodasOpcoes;
+    private javax.swing.JMenuItem cmdExit;
+    private javax.swing.JButton cmdGenerateScript;
+    private javax.swing.JMenuItem cmdOpenModel;
+    private javax.swing.JButton cmdResetAllOptions;
+    private javax.swing.JMenuItem cmdSaveScript;
+    private javax.swing.JButton cmdSelectAllOptions;
     private javax.swing.JLabel lblOwner;
-    private javax.swing.JLabel lblTabelasModelo;
-    private javax.swing.JLabel lblTraduzirTipo;
-    private javax.swing.JList listSelecaoTabelas;
-    private javax.swing.JMenu menuAparencia;
-    private javax.swing.JMenuBar menuBarPrincipal;
-    private javax.swing.JPanel panelChkOpcoes;
-    private javax.swing.JPanel panelCmdsOpcoes;
-    private javax.swing.JPanel panelConfiguracaoExtras;
-    private javax.swing.JPanel panelConverterCampos;
+    private javax.swing.JLabel lblTablesFromModel;
+    private javax.swing.JLabel lblTranslateDatatype;
+    private javax.swing.JList listTableSelections;
+    private javax.swing.JMenuBar menuBarMain;
+    private javax.swing.JMenu menuLayout;
+    private javax.swing.JPanel panelChkOptions;
+    private javax.swing.JPanel panelCmdsOptions;
+    private javax.swing.JPanel panelExtraConfigurations;
+    private javax.swing.JPanel panelFieldsTranslate;
+    private javax.swing.JPanel panelMain;
     private javax.swing.JPanel panelObjectIdentification;
     private javax.swing.JPanel panelOwner;
-    private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JPanel panelResultadoGeracaoScript;
-    private javax.swing.JPanel panelSelecaoOpcoes;
-    private javax.swing.JPanel panelSelecaoTabelas;
+    private javax.swing.JPanel panelScriptResult;
+    private javax.swing.JPanel panelSelectOptions;
+    private javax.swing.JPanel panelTableSelections;
     private javax.swing.JRadioButton radioWithOID;
     private javax.swing.JRadioButton radioWithoutOID;
     private javax.swing.JRadioButtonMenuItem rdLFAutumn;
@@ -1505,12 +1482,12 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
     private javax.swing.JRadioButtonMenuItem rdLFRavenGraphite;
     private javax.swing.JRadioButtonMenuItem rdLFRavenGraphiteGlass;
     private javax.swing.JRadioButtonMenuItem rdLFSahara;
-    private javax.swing.JScrollPane scrollPaneResultadoGeracaoScript;
-    private javax.swing.JScrollPane scrollPaneSelecaoTabelas;
-    private javax.swing.JScrollPane scroolPaneConverterCampos;
+    private javax.swing.JScrollPane scrollPaneScriptResult;
+    private javax.swing.JScrollPane scrollPaneTableSelections;
+    private javax.swing.JScrollPane scroolPaneFieldsTranslate;
     private javax.swing.JPopupMenu.Separator separatorSair;
-    private javax.swing.JTable tableConverterCampos;
-    private javax.swing.JTextArea txtAreaResultadoGeracaoScript;
+    private javax.swing.JTable tableDatatypes;
+    private javax.swing.JTextArea txtAreaScriptResult;
     private javax.swing.JTextField txtOwner;
     // End of variables declaration//GEN-END:variables
 
@@ -1537,7 +1514,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
             setFont(list.getFont());
             setBorder(cellHasFocus
-                    ? UIManager.getBorder("List.focusCellHighlightBorder")
+                    ? UIManager.getBorder("List.focusCellHighlightBorder") //NOI18N
                     : this.m_noFocusBorder);
 
             return this;
@@ -1578,10 +1555,10 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
     class CheckListener implements MouseListener, KeyListener {
 
-        protected JList listaTabelas;
+        protected JList tableList;
 
-        public CheckListener(JList listaTabelas) {
-            this.listaTabelas = listaTabelas;
+        public CheckListener(JList tableList) {
+            this.tableList = tableList;
         }
 
         public void mouseClicked(MouseEvent e) {
@@ -1613,17 +1590,17 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         }
 
         protected void doCheck() {
-            int index[] = this.listaTabelas.getSelectedIndices();
+            int index[] = this.tableList.getSelectedIndices();
             if (index.length == 0) {
                 return;
             }
             FrameDBD4ToPostgres.DBDesignerTableItem data = null;
 
             for (int i = 0; i < index.length; i++) {
-                data = (FrameDBD4ToPostgres.DBDesignerTableItem) this.listaTabelas.getModel().getElementAt(index[i]);
+                data = (FrameDBD4ToPostgres.DBDesignerTableItem) this.tableList.getModel().getElementAt(index[i]);
                 data.invertSelected();
             }
-            this.listaTabelas.repaint();
+            this.tableList.repaint();
         }
     }
 }
