@@ -49,6 +49,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import dbd4topostgres.model.DBDesignerParser;
+import java.util.ResourceBundle;
 
 /**
  *
@@ -62,9 +63,12 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
     private String txtFileName = null;
     BufferedImage backgroundImage = null;
     BufferedImage projectIcon = null;
+    ResourceBundle resourceBundle = null;
 
     /** Creates new form FrameDBD4ToPostgres */
     public FrameDBD4ToPostgres() {
+        //
+        resourceBundle = java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres");
         // create a Preferences instance (somewhere later in the code)
         this.preferences = Preferences.userNodeForPackage(this.getClass());
         //      
@@ -285,6 +289,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         panelSelectOptions.setPreferredSize(new java.awt.Dimension(700, 150));
         panelSelectOptions.setLayout(new java.awt.BorderLayout());
 
+        panelChkOptions.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         panelChkOptions.setMinimumSize(panelChkOptions.getPreferredSize());
         panelChkOptions.setName("panelChkOptions"); // NOI18N
         panelChkOptions.setLayout(new java.awt.GridLayout(3, 3));
@@ -355,7 +360,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
         panelSelectOptions.add(panelChkOptions, java.awt.BorderLayout.CENTER);
 
-        panelCmdsOptions.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 100));
+        panelCmdsOptions.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 50)));
         panelCmdsOptions.setMinimumSize(panelCmdsOptions.getPreferredSize());
         panelCmdsOptions.setName("panelCmdsOptions"); // NOI18N
         panelCmdsOptions.setLayout(new java.awt.GridLayout(3, 1, 0, 5));
@@ -372,7 +377,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         cmdSelectAllOptions.setMaximumSize(new java.awt.Dimension(100, 15));
         cmdSelectAllOptions.setMinimumSize(new java.awt.Dimension(100, 15));
         cmdSelectAllOptions.setName("cmdSelectAllOptions"); // NOI18N
-        cmdSelectAllOptions.setPreferredSize(new java.awt.Dimension(100, 15));
+        cmdSelectAllOptions.setPreferredSize(new java.awt.Dimension(150, 15));
         cmdSelectAllOptions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdSelectAllOptionsActionPerformed(evt);
@@ -392,7 +397,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         cmdResetAllOptions.setMaximumSize(new java.awt.Dimension(100, 15));
         cmdResetAllOptions.setMinimumSize(new java.awt.Dimension(100, 15));
         cmdResetAllOptions.setName("cmdResetAllOptions"); // NOI18N
-        cmdResetAllOptions.setPreferredSize(new java.awt.Dimension(100, 15));
+        cmdResetAllOptions.setPreferredSize(new java.awt.Dimension(150, 15));
         cmdResetAllOptions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdResetAllOptionsActionPerformed(evt);
@@ -412,7 +417,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         cmdGenerateScript.setMaximumSize(new java.awt.Dimension(100, 15));
         cmdGenerateScript.setMinimumSize(new java.awt.Dimension(100, 15));
         cmdGenerateScript.setName("cmdGenerateScript"); // NOI18N
-        cmdGenerateScript.setPreferredSize(new java.awt.Dimension(100, 15));
+        cmdGenerateScript.setPreferredSize(new java.awt.Dimension(150, 15));
         cmdGenerateScript.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdGenerateScriptActionPerformed(evt);
@@ -1041,7 +1046,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 this.txtAreaScriptResult.setCaretPosition(0);
 
             } catch (Exception e1) {
-                JOptionPane.showMessageDialog(null, java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("FAIL TO GENERATE SQL SCRIPT") + e1.getMessage());
+                JOptionPane.showMessageDialog(null, resourceBundle.getString("fail.to.generate.sql.script") + e1.getMessage());
             }
         }
 }//GEN-LAST:event_cmdGenerateScriptActionPerformed
@@ -1080,7 +1085,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
 
         fc.setFileFilter(fileFilter);
-        int res = fc.showDialog(this, java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("OPEN DBDESIGNER4 MODEL"));
+        int res = fc.showDialog(this, resourceBundle.getString("open.dbdesigner4.model"));
         this.currentInputDirectory = fc.getCurrentDirectory();
 
 
@@ -1095,14 +1100,14 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 this.openModel(file);
 
             } catch (FileNotFoundException e1) {
-                JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("FILE NOT FOUND"));
+                JOptionPane.showMessageDialog(this, resourceBundle.getString("file.not.found"));
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("FAIL IN READ FILE. CHECK IF THE FILE IS GENERATED BY DBDESIGNER 4."));
+                JOptionPane.showMessageDialog(this, resourceBundle.getString("fail.in.read.file"));
             }
 
 
         } else {
-            JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("FILE NOT SELECTED."));
+            JOptionPane.showMessageDialog(this, resourceBundle.getString("file.not.selected"));
         }
 
     }//GEN-LAST:event_cmdOpenModelActionPerformed
@@ -1138,7 +1143,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
 
             fc.setFileFilter(fileFilter);
-            int res = fc.showDialog(this, java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("SAVE TO..."));
+            int res = fc.showDialog(this, resourceBundle.getString("save.as"));
 
             this.currentOutputDirectory = fc.getCurrentDirectory();
 
@@ -1158,7 +1163,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
                 int saveOption = JOptionPane.YES_OPTION;
                 if (file.exists()) {
                     //default icon, custom title
-                    saveOption = JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("FILE ALREADY EXISTS. DO YOU WANT TO OVERWRITE IT?"), java.util.ResourceBundle.getBundle("dbd4topostgres/resources/FrameDBD4ToPostgres").getString("FILE ALREADY EXISTS"), JOptionPane.YES_NO_OPTION);
+                    saveOption = JOptionPane.showConfirmDialog(this, resourceBundle.getString("file.already.exists.overwrite.it"), resourceBundle.getString("file.already.exists"), JOptionPane.YES_NO_OPTION);
 
                 }
                 if (saveOption == JOptionPane.YES_OPTION) {
