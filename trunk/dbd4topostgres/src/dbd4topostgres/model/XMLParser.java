@@ -18,7 +18,7 @@ import org.xml.sax.SAXParseException;
 
 public class XMLParser {
 
-    public static Document getDocument(InputSource is) throws Exception{
+    public static Document getDocument(InputSource is) throws Exception {
         try {
             DocumentBuilderFactory docBuilderFactory =
                     DocumentBuilderFactory.newInstance();
@@ -132,12 +132,10 @@ public class XMLParser {
         return false;
     }
 
-    public static NodeIterator getNodeByXPath(Node target, String xpath) throws Exception {        
-            Transformer serializer = TransformerFactory.newInstance().newTransformer();
-            serializer.setOutputProperty("omit-xml-declaration", "yes");
-            NodeIterator nl = XPathAPI.selectNodeIterator(target, xpath);
-            return nl;                        
+    public static NodeIterator getNodeByXPath(Node target, String xpath) throws Exception {
+        Transformer serializer = TransformerFactory.newInstance().newTransformer();
+        serializer.setOutputProperty("omit-xml-declaration", "yes");
+        NodeIterator nl = XPathAPI.selectNodeIterator(target, xpath);
+        return nl;
     }
-    
-    
 }
