@@ -405,7 +405,7 @@ public final class DBDesignerParser {
 
 
                 if (tableName.startsWith("'")) {
-                    // Remove final slash                     
+                    // Remove final single quote                     
                     viewName = viewName + "'vi_";
                     if (tableName.endsWith("'")) {
                         viewName = viewName + tableName.substring(1, tableName.length() - 1);
@@ -481,7 +481,7 @@ public final class DBDesignerParser {
 
 
                     if (sequenceName.endsWith("'")) {
-                        // Remove final slash
+                        // Remove final single quote
                         sequenceName = sequenceName.substring(0, sequenceName.length() - 1);
                         sequenceName = sequenceName + "_seq' ";
                     } else {
@@ -525,17 +525,17 @@ public final class DBDesignerParser {
                     sb.append(" ALTER COLUMN ").append(primaryKeyName).append(" SET DEFAULT nextval('");
                     if (tableName.startsWith("'")) {
                         if (tableName.endsWith("'")) {
-                            // Remove initial and final slashs                            
+                            // Remove initial and final single quotes                            
                             sb.append(tableName.substring(1, tableName.length() - 1));
                         } else {
-                            // Remove initial slash  
+                            // Remove initial single quote  
                             sb.append(tableName.substring(1, tableName.length()));
                         }
                     } else if (tableName.endsWith("'")) {
-                        // Remove final slash  
+                        // Remove final single quote  
                         sb.append(tableName.substring(0, tableName.length() - 1));
                     } else {
-                        // Not have slash
+                        // Not have single quote
                         sb.append(tableName);
                     }
                     //
