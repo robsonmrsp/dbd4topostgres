@@ -152,7 +152,7 @@ public final class DBDesignerParser {
                         }
                         sb.append("\r\n");
                     }
-                    // Adiciona o comentario da tabela
+                    // Add table comment
                     if (isAddCommentsSelected) {
                         if ((tableComments != null) && (!tableComments.trim().equals(""))) {
                             sb.append("COMMENT ON TABLE ").append(tableName).append(" IS \'").append(tableComments).append("\';\r\n");
@@ -230,16 +230,14 @@ public final class DBDesignerParser {
                 datatypeParams = DBDesignerModel4.normalizeAttribute(datatypeParams);
 
                 columnDataType = datatypeName + datatypeParams;
-                //columnDataType = columnDataType.replaceAll(" ", "");
-
-
-                // Verifica se usuário alterou a tradução do tipo de dado
+                
+                // Verify if datatype is updated
                 datatypeTranslation = mapDatatypesTranslation.get(columnDataType);
                 if ((datatypeTranslation != null) && (!datatypeTranslation.trim().equals(""))) {
                     columnDataType = datatypeTranslation;
                 }
                 //
-                // Obtem o valor default da coluna
+                // Get defaut value to field
                 defaultValue = DBDesignerModel4.normalizeAttribute(elementColumn.getAttribute("DefaultValue"));
                 if (defaultValue != null && (!defaultValue.trim().equals(""))) {
                     defaultValue = " DEFAULT " + defaultValue;
