@@ -70,7 +70,7 @@ public final class DBDesignerParser {
             datatypeParams = elementColumn.getAttribute("DatatypeParams");
             datatypeParams = DBDesignerModel4.normalizeAttribute(datatypeParams);
             columnDataType = datatypeName + datatypeParams;
-            //columnDataType = columnDataType.replaceAll(" ", "");
+            //
             if (columnDataType.length() > 0) {
                 mapColumnsTypes.put(columnDataType, columnDataType);
             }
@@ -694,7 +694,14 @@ public final class DBDesignerParser {
         return tablesPriority;
     }
 }
-
+/*
+ *  Class to order tables by priority.
+ *  The priority of a table is defined by all refenced relations
+ *  of the model by each table:
+ *  Source relations tables must be put with more priority, and the
+ *  destination is put after with small priority. 
+ *  
+ */
 class TablesPriority {
 
     ArrayList<String> tables = null;
@@ -744,6 +751,12 @@ class TablesPriority {
     }
 }
 
+/*
+ *  Class to represent a table reference defined by:
+ *  source table and destination table
+ *  It is used to define the table priority.
+ * 
+ */
 class TableReference implements Comparable<TableReference> {
 
     private String sourceTable = null;
