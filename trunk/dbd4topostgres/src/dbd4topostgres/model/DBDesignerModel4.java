@@ -49,7 +49,46 @@ public class DBDesignerModel4 {
         String resultString = sourceString;
         resultString = resultString.replaceAll("\\\\n", "\r\n");
         resultString = resultString.replaceAll("\\\\a", "'");
-        resultString = resultString.replaceAll("\\\\A", "\"");        
+        resultString = resultString.replaceAll("\\\\A", "\"");  
+        resultString = resultString.replaceAll("\\\\k", "<");
+        resultString = resultString.replaceAll("\\\\g", ">");        
+        //
+        resultString = resultString.replaceAll("\\\\126", "~");
+        resultString = resultString.replaceAll("\\\\127", "");
+        resultString = resultString.replaceAll("\\\\128", "€");
+        resultString = resultString.replaceAll("\\\\129", "�");
+        resultString = resultString.replaceAll("\\\\130", "‚");
+        resultString = resultString.replaceAll("\\\\131", "ƒ");
+        resultString = resultString.replaceAll("\\\\132", "„");
+        resultString = resultString.replaceAll("\\\\133", "…");
+        resultString = resultString.replaceAll("\\\\134", "†");
+        resultString = resultString.replaceAll("\\\\135", "‡");
+        resultString = resultString.replaceAll("\\\\136", "ˆ");
+        resultString = resultString.replaceAll("\\\\137", "‰");
+        resultString = resultString.replaceAll("\\\\138", "Š");
+        resultString = resultString.replaceAll("\\\\139", "‹");
+        resultString = resultString.replaceAll("\\\\140", "Œ");
+        resultString = resultString.replaceAll("\\\\141", "�");
+        resultString = resultString.replaceAll("\\\\142", "Ž");
+        resultString = resultString.replaceAll("\\\\143", "�");
+        resultString = resultString.replaceAll("\\\\144", "�");
+        resultString = resultString.replaceAll("\\\\145", "‘");
+        resultString = resultString.replaceAll("\\\\146", "’");
+        resultString = resultString.replaceAll("\\\\147", "“");
+        resultString = resultString.replaceAll("\\\\148", "”");
+        resultString = resultString.replaceAll("\\\\149", "•");
+        resultString = resultString.replaceAll("\\\\150", "–");
+        resultString = resultString.replaceAll("\\\\151", "—");
+        resultString = resultString.replaceAll("\\\\152", "˜");
+        resultString = resultString.replaceAll("\\\\153", "™");
+        resultString = resultString.replaceAll("\\\\154", "š");
+        resultString = resultString.replaceAll("\\\\155", "›");
+        resultString = resultString.replaceAll("\\\\156", "œ");
+        resultString = resultString.replaceAll("\\\\157", "�");
+        resultString = resultString.replaceAll("\\\\158", "ž");
+        resultString = resultString.replaceAll("\\\\159", "Ÿ");
+        resultString = resultString.replaceAll("\\\\160", "¿");
+        
         //
         resultString = resultString.replaceAll("\\\\160", " ");
         resultString = resultString.replaceAll("\\\\161", "¡");

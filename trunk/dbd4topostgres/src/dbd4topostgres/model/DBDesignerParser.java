@@ -620,7 +620,9 @@ public final class DBDesignerParser {
                         columnName = (String) this.columns.get(elementIndexColumn.getAttribute("idColumn"));
                         columnNames = columnNames + ", " + columnName;
                     }
-                    sb.append(columnNames.substring(1));
+                    if (columnName.length()>1){
+                        sb.append(columnNames.substring(2));
+                    }
                     sb.append(");\r\n\r\n");
                 }
             }
