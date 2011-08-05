@@ -363,6 +363,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         panelCmdsOptions.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 50)));
         panelCmdsOptions.setMinimumSize(panelCmdsOptions.getPreferredSize());
         panelCmdsOptions.setName("panelCmdsOptions"); // NOI18N
+        panelCmdsOptions.setPreferredSize(new java.awt.Dimension(250, 69));
         panelCmdsOptions.setLayout(new java.awt.GridLayout(3, 1, 0, 5));
 
         cmdSelectAllOptions.setBackground(resourceMap.getColor("cmdSelectAllOptions.background")); // NOI18N
@@ -373,7 +374,6 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         cmdSelectAllOptions.setContentAreaFilled(false);
         cmdSelectAllOptions.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         cmdSelectAllOptions.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        cmdSelectAllOptions.setMargin(new java.awt.Insets(0, 0, 0, 0));
         cmdSelectAllOptions.setMaximumSize(new java.awt.Dimension(100, 15));
         cmdSelectAllOptions.setMinimumSize(new java.awt.Dimension(100, 15));
         cmdSelectAllOptions.setName("cmdSelectAllOptions"); // NOI18N
@@ -393,7 +393,6 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         cmdResetAllOptions.setContentAreaFilled(false);
         cmdResetAllOptions.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         cmdResetAllOptions.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        cmdResetAllOptions.setMargin(new java.awt.Insets(0, 0, 0, 0));
         cmdResetAllOptions.setMaximumSize(new java.awt.Dimension(100, 15));
         cmdResetAllOptions.setMinimumSize(new java.awt.Dimension(100, 15));
         cmdResetAllOptions.setName("cmdResetAllOptions"); // NOI18N
@@ -413,7 +412,6 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         cmdGenerateScript.setContentAreaFilled(false);
         cmdGenerateScript.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         cmdGenerateScript.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        cmdGenerateScript.setMargin(new java.awt.Insets(0, 0, 0, 0));
         cmdGenerateScript.setMaximumSize(new java.awt.Dimension(100, 15));
         cmdGenerateScript.setMinimumSize(new java.awt.Dimension(100, 15));
         cmdGenerateScript.setName("cmdGenerateScript"); // NOI18N
@@ -441,12 +439,12 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         lblOwner.setText(resourceMap.getString("lblOwner.text")); // NOI18N
         lblOwner.setName("lblOwner"); // NOI18N
         panelOwner.add(lblOwner);
-        lblOwner.setBounds(20, 10, 36, 20);
+        lblOwner.setBounds(20, 10, 100, 20);
 
         txtOwner.setColumns(20);
         txtOwner.setName("txtOwner"); // NOI18N
         panelOwner.add(txtOwner);
-        txtOwner.setBounds(80, 10, 150, 20);
+        txtOwner.setBounds(150, 10, 170, 20);
 
         panelExtraConfigurations.add(panelOwner);
 
@@ -466,14 +464,14 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
             }
         });
         panelObjectIdentification.add(chkObjectIdentification);
-        chkObjectIdentification.setBounds(10, 10, 80, 23);
+        chkObjectIdentification.setBounds(10, 10, 80, 21);
 
         buttonGroupObjectIdentification.add(radioWithOID);
         radioWithOID.setText(resourceMap.getString("radioWithOID.text")); // NOI18N
         radioWithOID.setEnabled(false);
         radioWithOID.setName("radioWithOID"); // NOI18N
         panelObjectIdentification.add(radioWithOID);
-        radioWithOID.setBounds(200, 10, 90, 23);
+        radioWithOID.setBounds(200, 10, 90, 21);
 
         buttonGroupObjectIdentification.add(radioWithoutOID);
         radioWithoutOID.setSelected(true);
@@ -481,7 +479,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         radioWithoutOID.setEnabled(false);
         radioWithoutOID.setName("radioWithoutOID"); // NOI18N
         panelObjectIdentification.add(radioWithoutOID);
-        radioWithoutOID.setBounds(90, 10, 100, 23);
+        radioWithoutOID.setBounds(90, 10, 100, 21);
 
         panelExtraConfigurations.add(panelObjectIdentification);
 
@@ -596,15 +594,16 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         menuBarMain.setName("menuBarMain"); // NOI18N
         menuBarMain.setPreferredSize(new java.awt.Dimension(700, 30));
 
-        menuFile.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(resourceMap.getColor("menuFile.border.outsideBorder.lineColor"), 1, true), javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 5))); // NOI18N
-        menuFile.setForeground(resourceMap.getColor("menuFile.foreground")); // NOI18N
+        menuFile.setBackground(resourceMap.getColor("menuHelp.background")); // NOI18N
+        menuFile.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(resourceMap.getColor("menuHelp.border.outsideBorder.lineColor"), 1, true), javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 5))); // NOI18N
+        menuFile.setForeground(resourceMap.getColor("menuHelp.foreground")); // NOI18N
         menuFile.setText(resourceMap.getString("menuFile.text")); // NOI18N
-        menuFile.setFont(resourceMap.getFont("menuFile.font")); // NOI18N
+        menuFile.setFont(resourceMap.getFont("menuHelp.font")); // NOI18N
         menuFile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         menuFile.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         menuFile.setIconTextGap(10);
         menuFile.setName("menuFile"); // NOI18N
-        menuFile.setPreferredSize(new java.awt.Dimension(80, 30));
+        menuFile.setPreferredSize(new java.awt.Dimension(100, 30));
 
         cmdOpenModel.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
         cmdOpenModel.setText(resourceMap.getString("cmdOpenModel.text")); // NOI18N
@@ -648,13 +647,16 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
         menuBarMain.add(menuFile);
 
-        menuLayout.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(resourceMap.getColor("menuLayout.border.outsideBorder.lineColor"), 1, true), javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 5))); // NOI18N
-        menuLayout.setForeground(resourceMap.getColor("menuLayout.foreground")); // NOI18N
+        menuLayout.setBackground(resourceMap.getColor("menuHelp.background")); // NOI18N
+        menuLayout.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(resourceMap.getColor("menuHelp.border.outsideBorder.lineColor"), 1, true), javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 5))); // NOI18N
+        menuLayout.setForeground(resourceMap.getColor("menuHelp.foreground")); // NOI18N
         menuLayout.setText(resourceMap.getString("menuLayout.text")); // NOI18N
         menuLayout.setToolTipText(resourceMap.getString("menuLayout.toolTipText")); // NOI18N
+        menuLayout.setFont(resourceMap.getFont("menuHelp.font")); // NOI18N
         menuLayout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        menuLayout.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         menuLayout.setName("menuLayout"); // NOI18N
-        menuLayout.setPreferredSize(new java.awt.Dimension(80, 30));
+        menuLayout.setPreferredSize(new java.awt.Dimension(100, 30));
 
         buttonGroupLookAndFeel.add(rdLFAutumn);
         rdLFAutumn.setText(resourceMap.getString("rdLFAutumn.text")); // NOI18N
@@ -898,15 +900,12 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
         menuBarMain.add(menuLayout);
 
+        menuHelp.setBackground(resourceMap.getColor("menuHelp.background")); // NOI18N
         menuHelp.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(resourceMap.getColor("menuHelp.border.outsideBorder.lineColor"), 1, true), javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 5))); // NOI18N
         menuHelp.setForeground(resourceMap.getColor("menuHelp.foreground")); // NOI18N
         menuHelp.setText(resourceMap.getString("menuHelp.text")); // NOI18N
         menuHelp.setFont(resourceMap.getFont("menuHelp.font")); // NOI18N
-        menuHelp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        menuHelp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        menuHelp.setIconTextGap(10);
-        menuHelp.setName("menuHelp"); // NOI18N
-        menuHelp.setPreferredSize(new java.awt.Dimension(80, 30));
+        menuHelp.setPreferredSize(new java.awt.Dimension(100, 30));
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(dbd4topostgres.Dbd4topostgresApp.class).getContext().getActionMap(FrameDBD4ToPostgres.class, this);
         aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
