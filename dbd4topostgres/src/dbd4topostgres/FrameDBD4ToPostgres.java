@@ -464,14 +464,14 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
             }
         });
         panelObjectIdentification.add(chkObjectIdentification);
-        chkObjectIdentification.setBounds(10, 10, 80, 21);
+        chkObjectIdentification.setBounds(10, 10, 70, 21);
 
         buttonGroupObjectIdentification.add(radioWithOID);
         radioWithOID.setText(resourceMap.getString("radioWithOID.text")); // NOI18N
         radioWithOID.setEnabled(false);
         radioWithOID.setName("radioWithOID"); // NOI18N
         panelObjectIdentification.add(radioWithOID);
-        radioWithOID.setBounds(200, 10, 90, 21);
+        radioWithOID.setBounds(230, 10, 100, 21);
 
         buttonGroupObjectIdentification.add(radioWithoutOID);
         radioWithoutOID.setSelected(true);
@@ -479,7 +479,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         radioWithoutOID.setEnabled(false);
         radioWithoutOID.setName("radioWithoutOID"); // NOI18N
         panelObjectIdentification.add(radioWithoutOID);
-        radioWithoutOID.setBounds(90, 10, 100, 21);
+        radioWithoutOID.setBounds(90, 10, 130, 21);
 
         panelExtraConfigurations.add(panelObjectIdentification);
 
@@ -909,7 +909,6 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(dbd4topostgres.Dbd4topostgresApp.class).getContext().getActionMap(FrameDBD4ToPostgres.class, this);
         aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
-        aboutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         aboutMenuItem.setText(resourceMap.getString("aboutMenuItem.text")); // NOI18N
         aboutMenuItem.setToolTipText(resourceMap.getString("aboutMenuItem.toolTipText")); // NOI18N
         aboutMenuItem.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
