@@ -6,6 +6,8 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="buttonGroupObjectIdentification">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroupCharset">
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="menuBarMain">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -97,6 +99,48 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdSaveScriptActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="separatorCharset">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="separatorCharset" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="radioWindowsCP1252">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="buttonGroupCharset"/>
+                </Property>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" resourceKey="radioWindowsCP1252.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="radioWindowsCP1252.toolTipText"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                    <EmptyBorder bottom="5" left="10" right="10" top="5"/>
+                  </Border>
+                </Property>
+                <Property name="name" type="java.lang.String" value="radioWindowsCP1252" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioWindowsCP1252ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="radioLinuxUTF8">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="buttonGroupCharset"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="radioLinuxUTF8.text"/>
+                <Property name="toolTipText" type="java.lang.String" resourceKey="radioLinuxUTF8.toolTipText"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                    <EmptyBorder bottom="5" left="10" right="10" top="5"/>
+                  </Border>
+                </Property>
+                <Property name="name" type="java.lang.String" value="radioLinuxUTF8" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioLinuxUTF8ActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="separatorSair">
