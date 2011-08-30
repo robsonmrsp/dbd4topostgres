@@ -10,6 +10,7 @@
  */
 package dbd4topostgres;
 
+import dbd4topostgres.model.DBDesignerModel4;
 import java.awt.Component;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -95,8 +96,20 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
             lastLookAndFell = "Moderate"; //NOI18N
         }
         ActionEvent action = new ActionEvent(new JRadioButton("LookAndFellAbstrato"), ActionEvent.ACTION_PERFORMED, lastLookAndFell); //NOI18N
+
         this.lookAndFellActionPerfomed(action);
 
+        // Set last Charset selected on menu
+        String lastCharsetSelected= this.preferences.get("LAST_CHARSET", "");
+        if (lastCharsetSelected == null || lastCharsetSelected.trim().equals("")) { //NOI18N
+            lastCharsetSelected = "Windows";
+            this.radioWindowsCP1252.setSelected(true);
+        } else {
+            lastCharsetSelected = "Linux";
+            this.radioLinuxUTF8.setSelected(true);
+        }
+        DBDesignerModel4.operationSystem =lastCharsetSelected;
+        this.preferences.get("LAST_CHARSET", "Linux");//NOI18N
         // Open last file
         this.openLastModel();
 
@@ -196,6 +209,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
 
         buttonGroupLookAndFeel = new javax.swing.ButtonGroup();
         buttonGroupObjectIdentification = new javax.swing.ButtonGroup();
+        buttonGroupCharset = new javax.swing.ButtonGroup();
         panelMain = new javax.swing.JPanel();
         panelSelectOptions = new javax.swing.JPanel();
         panelChkOptions = new javax.swing.JPanel();
@@ -244,6 +258,9 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         javax.swing.JMenu menuFile = new javax.swing.JMenu();
         cmdOpenModel = new javax.swing.JMenuItem();
         cmdSaveScript = new javax.swing.JMenuItem();
+        separatorCharset = new javax.swing.JPopupMenu.Separator();
+        radioWindowsCP1252 = new javax.swing.JRadioButtonMenuItem();
+        radioLinuxUTF8 = new javax.swing.JRadioButtonMenuItem();
         separatorSair = new javax.swing.JPopupMenu.Separator();
         cmdExit = new javax.swing.JMenuItem();
         menuLayout = new javax.swing.JMenu();
@@ -628,6 +645,34 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
             }
         });
         menuFile.add(cmdSaveScript);
+
+        separatorCharset.setName("separatorCharset"); // NOI18N
+        menuFile.add(separatorCharset);
+
+        buttonGroupCharset.add(radioWindowsCP1252);
+        radioWindowsCP1252.setSelected(true);
+        radioWindowsCP1252.setText(resourceMap.getString("radioWindowsCP1252.text")); // NOI18N
+        radioWindowsCP1252.setToolTipText(resourceMap.getString("radioWindowsCP1252.toolTipText")); // NOI18N
+        radioWindowsCP1252.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        radioWindowsCP1252.setName("radioWindowsCP1252"); // NOI18N
+        radioWindowsCP1252.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioWindowsCP1252ActionPerformed(evt);
+            }
+        });
+        menuFile.add(radioWindowsCP1252);
+
+        buttonGroupCharset.add(radioLinuxUTF8);
+        radioLinuxUTF8.setText(resourceMap.getString("radioLinuxUTF8.text")); // NOI18N
+        radioLinuxUTF8.setToolTipText(resourceMap.getString("radioLinuxUTF8.toolTipText")); // NOI18N
+        radioLinuxUTF8.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        radioLinuxUTF8.setName("radioLinuxUTF8"); // NOI18N
+        radioLinuxUTF8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioLinuxUTF8ActionPerformed(evt);
+            }
+        });
+        menuFile.add(radioLinuxUTF8);
 
         separatorSair.setName("separatorSair"); // NOI18N
         separatorSair.setOpaque(true);
@@ -1413,6 +1458,18 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         this.lookAndFellActionPerfomed(evt);
     }//GEN-LAST:event_rdLFSaharaActionPerformed
 
+    private void radioWindowsCP1252ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioWindowsCP1252ActionPerformed
+      
+        DBDesignerModel4.operationSystem = "Windows";//NOI18N
+        this.preferences.put("LAST_CHARSET", "Windows"); //NOI18N
+    }//GEN-LAST:event_radioWindowsCP1252ActionPerformed
+
+    private void radioLinuxUTF8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioLinuxUTF8ActionPerformed
+
+        DBDesignerModel4.operationSystem = "Linux";//NOI18N
+        this.preferences.put("LAST_CHARSET", "Linux");//NOI18N
+    }//GEN-LAST:event_radioLinuxUTF8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1431,6 +1488,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroupCharset;
     private javax.swing.ButtonGroup buttonGroupLookAndFeel;
     private javax.swing.ButtonGroup buttonGroupObjectIdentification;
     private javax.swing.JCheckBox chkAddAlternateKey;
@@ -1465,6 +1523,8 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
     private javax.swing.JPanel panelScriptResult;
     private javax.swing.JPanel panelSelectOptions;
     private javax.swing.JPanel panelTableSelections;
+    private javax.swing.JRadioButtonMenuItem radioLinuxUTF8;
+    private javax.swing.JRadioButtonMenuItem radioWindowsCP1252;
     private javax.swing.JRadioButton radioWithOID;
     private javax.swing.JRadioButton radioWithoutOID;
     private javax.swing.JRadioButtonMenuItem rdLFAutumn;
@@ -1490,6 +1550,7 @@ public class FrameDBD4ToPostgres extends javax.swing.JFrame {
     private javax.swing.JScrollPane scrollPaneScriptResult;
     private javax.swing.JScrollPane scrollPaneTableSelections;
     private javax.swing.JScrollPane scroolPaneFieldsTranslate;
+    private javax.swing.JPopupMenu.Separator separatorCharset;
     private javax.swing.JPopupMenu.Separator separatorSair;
     private javax.swing.JTable tableDatatypes;
     private javax.swing.JTextArea txtAreaScriptResult;
